@@ -1,0 +1,7 @@
+data
+.env
+__pycache__
+chunk_list.txt
+*.wav
+*.mp4
+*.mp3
