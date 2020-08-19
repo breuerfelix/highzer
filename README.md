@@ -2,6 +2,7 @@
 
 ## how to
 ```bash
+poetry install
 python cli.py --help
 ```
 
