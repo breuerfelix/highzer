@@ -4,7 +4,9 @@ import requests
 from utils import run, pprint, locate_folder
 from chat import analyze_chat
 from audio import analyze_audio, analyze_audio_test
-from ffmpeg import cut, merge
+from fpeg import cut, merge
+from clip import cut_clips
+from yt import upload_video
 
 
 @click.group()
@@ -55,12 +57,6 @@ def convert(ident):
 
 
 @cli.command()
-def test():
-    highlights = analyze_audio_test(1)
-    pprint(highlights)
-
-
-@cli.command()
 @click.argument("ident")
 @click.option("-c", "--chunk-size", default=30, help="in seconds", show_default=True)
 def analyze(ident, chunk_size=30):
@@ -84,6 +80,30 @@ def analyze(ident, chunk_size=30):
 
     for chunk in files:
         os.remove(chunk)
+
+
+@cli.command()
+@click.argument("ident")
+@click.option(
+    "-p", "--period", default="week", help="day / week / month / all", show_default=True
+)
+@click.option("-g", "--game", default=None)
+@click.option("-c", "--channel", default=None)
+def clip(ident, period, game, channel):
+    if game is None and channel is None:
+        print("Please provide a channel or a game!")
+        return
+
+    clips, merged = cut_clips(ident, period, game, channel)
+    upload_video(merged, clips, game or channel)
+
+
+@cli.command()
+def test():
+    print("imports are working")
+    return
+    highlights = analyze_audio_test(1)
+    pprint(highlights)
 
 
 if __name__ == "__main__":

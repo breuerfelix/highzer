@@ -2,15 +2,25 @@ import json
 import subprocess
 import timeit
 import numpy as np
+import os
 
 
-def pretty_time(secs):
+def _sec_to_time(secs):
     # pretty print seconds to hour:minute:seconds
     hours = secs // 3600
     minutes = secs // 60 - hours * 60
     seconds = secs - (hours * 60 + minutes) * 60
+    return hours, minutes, seconds
 
+
+def pretty_time(secs):
+    hours, minutes, seconds = _sec_to_time(secs)
     return f"{hours:02}:{minutes:02}:{seconds:02}"
+
+
+def pretty_short_time(secs):
+    _, minutes, seconds = _sec_to_time(secs)
+    return f"{minutes:02}:{seconds:02}"
 
 
 def pprint(data):
@@ -18,7 +28,14 @@ def pprint(data):
 
 
 def run(*args):
-    return subprocess.run([str(arg) for arg in args], check=True)
+    # return subprocess.run([str(arg) for arg in args], check=True)
+    # subprocess.run(["bash", "-c", "'ls data'"])
+    return os.system(" ".join([str(x) for x in args]))
+
+    os.system("bash -c 'ls data'")
+
+    joined = " ".join([str(arg) for arg in args])
+    return subprocess.run(["bash", "-c", f"'{joined}'"], check=True)
 
 
 def array_chunk(arr, size):
@@ -44,7 +61,12 @@ def timer(org_function):
 
 
 def locate_folder(ident):
-    return f"data/{ident}"
+    folder = f"data/{ident}"
+
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+
+    return folder
 
 
 def convert_data(arr, chunk_size):

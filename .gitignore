@@ -6,3 +6,9 @@ chunk_list.txt
 *.mp4
 *.mp3
 poetry.lock
+
+node_modules
+package-lock.json
+
+client_secrets.json
+oauth2.json

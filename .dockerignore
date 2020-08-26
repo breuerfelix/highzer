@@ -1,0 +1,6 @@
+data
+oauth2.json
+client_secrets.json
+node_modules
+*.wav
+__pycache__
