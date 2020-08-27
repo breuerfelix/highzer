@@ -22,6 +22,8 @@ def cut(input_file, output_file, start, duration):
         output_file,
     )
 
+    return output_file
+
 
 def concat(input_files, output_file, temp_folder):
     temp_folder = os.path.abspath(temp_folder)
@@ -44,6 +46,8 @@ def concat(input_files, output_file, temp_folder):
         *input_files,
     )
 
+    return output_file
+
 
 def concat_fast(input_files, output_file):
     joined = "|".join(input_files)
@@ -51,6 +55,8 @@ def concat_fast(input_files, output_file):
     run(
         "ffmpeg", "-i", files, "-c", "copy", output_file,
     )
+
+    return output_file
 
 
 def sample(input_file):
@@ -87,6 +93,7 @@ def sample(input_file):
     """
 
     os.remove(temp_file)
+    return input_file
 
 
 def convert(input_file, output_file):
@@ -95,6 +102,7 @@ def convert(input_file, output_file):
     )
 
     os.remove(input_file)
+    return output_file
 
 
 def merge(input_files, output_file):
@@ -120,3 +128,4 @@ def merge(input_files, output_file):
     )
 
     os.remove(chunk_file)
+    return output_file

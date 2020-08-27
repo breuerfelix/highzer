@@ -30,11 +30,10 @@ def cut_clips(ident, period, game, channel):
     # concat([os.path.abspath(file) for file in files], os.path.abspath(f"{folder}/clip_merged.mp4"), os.path.abspath(f"{folder}/temp"))
     # concat(files, f"{folder}/clip_merged.mp4", f"{folder}/temp")
     # merge(files, f"{folder}/clip_merge.mp4")
-    merged = f"{folder}/merged.mpg"
-    concat_fast(files, merged)
-    convert(merged, f"{folder}/merged.mp4")
+    out_file = f"{folder}/merged.mp4"
+    convert(concat_fast(files, f"{folder}/merged.mpg"), out_file)
 
-    return clips, merged
+    return clips, out_file
 
 
 def download_clip(clip, filename):

@@ -2,7 +2,9 @@
 
 ## how to
 ```bash
-poetry install
+# ffmpeg required
+poetry install # not working ??
+pip install -r requirements.txt # working!
 python cli.py --help
 ```
 

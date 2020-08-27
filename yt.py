@@ -8,7 +8,7 @@ import sys
 import random
 import time
 from datetime import date
-from utils import pretty_short_time
+from utils import pretty_short_time, get_week
 
 SCOPE = "https://www.googleapis.com/auth/youtube.upload"
 
@@ -29,9 +29,7 @@ def upload_video(video_path, clips, cat):
         tags.append(clip["broadcaster"]["display_name"])
         duration += clip["duration"]
 
-    # get current calendar week
-    cw = date.today().isocalendar()[1]
-
+    cw = get_week()
     tags = [tag.lower() for tag in tags]
     tags = " ".join(tags)
 
