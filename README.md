@@ -10,6 +10,8 @@ python cli.py --help
 
 ## nice to know
 
+[youtube channel](https://www.youtube.com/channel/UC0M8qvpFLG_QoimeBih_6nA)
+
 ```bash
 export ID = ""
 # download stream
