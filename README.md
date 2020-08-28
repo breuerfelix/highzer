@@ -1,14 +1,20 @@
 # highzer
 
-## how to
+Twitch Stream Analyzer
+
+## Dependencies
+
+- ffmpeg
+- poetry
+
+## Setup and Run
+
 ```bash
-# ffmpeg required
-poetry install # not working ??
-pip install -r requirements.txt # working!
-python cli.py --help
+poetry install
+poetry run python highzer/highzer.py
 ```
 
-## nice to know
+## Nice to know
 
 [youtube channel](https://www.youtube.com/channel/UC0M8qvpFLG_QoimeBih_6nA)
 

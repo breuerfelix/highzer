@@ -13,3 +13,5 @@ package-lock.json
 client_secrets.json
 oauth2.json
 tags
+dist
+highzer.egg-info
