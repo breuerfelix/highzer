@@ -127,6 +127,9 @@ def schedule():
 
 @cli.command()
 def test():
+    print("imports working")
+    return
+
     highlights = analyze_audio_test(1)
     pprint(highlights)
 

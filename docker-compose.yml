@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  highzer:
+    image: felixbreuer/highzer:latest
+    build: .
+    volumes:
+      - ./oauth2.json:/usr/app/oauth2.json
+      - ./client_secrets.json:/usr/app/client_secrets.json
+      - ./data:/usr/app/data

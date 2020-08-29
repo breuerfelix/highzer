@@ -30,11 +30,13 @@ def upload_video(video_path, clips, cat):
         duration += clip["duration"]
 
     cw = get_week()
+    year = date.today().year
+
     tags = [tag.lower() for tag in tags]
     tags = " ".join(tags)
 
     snippet = {
-        "title": f"Week {cw} - {cat} - Top {len(clips)} Twitch Highlights",
+        "title": f"Week {cw} - {cat} - Top {len(clips)} Twitch Highlights {year}",
         "description": description,
         "tags": f"twitch highlight week{cw} {cat.replace(' ', '').lower()} {tags}",
     }
@@ -59,7 +61,8 @@ def upload(service, video_path, snippet):
     snippet["categoryId"] = "20"
     body = {
         "snippet": snippet,
-        "status": {"privacyStatus": "public",},
+        # TODO change to public once the api is approved
+        "status": {"privacyStatus": "private",},
     }
 
     insert_request = service.videos().insert(
