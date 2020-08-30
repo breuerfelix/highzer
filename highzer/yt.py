@@ -68,7 +68,10 @@ def upload(service, video_path, snippet):
     body = {
         "snippet": snippet,
         # TODO change to public once the api is approved
-        "status": {"privacyStatus": "private", "publishAt": get_publish_date(),},
+        "status": {
+            "privacyStatus": "private",
+            # "publishAt": get_publish_date(), # TODO re-enable
+        },
     }
 
     insert_request = service.videos().insert(
