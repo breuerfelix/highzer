@@ -7,10 +7,16 @@ import httplib2
 import sys
 import random
 import time
-from datetime import date
+from datetime import date, datetime
 from utils import pretty_short_time, get_week
 
 SCOPE = "https://www.googleapis.com/auth/youtube.upload"
+
+
+def get_publish_date():
+    now = datetime.utcnow()
+    now = now.replace(hour=17, minute=0, second=0, microsecond=0)
+    return now.isoformat() + "Z"
 
 
 def upload_video(video_path, clips, cat):
@@ -62,7 +68,7 @@ def upload(service, video_path, snippet):
     body = {
         "snippet": snippet,
         # TODO change to public once the api is approved
-        "status": {"privacyStatus": "private",},
+        "status": {"privacyStatus": "private", "publishAt": get_publish_date(),},
     }
 
     insert_request = service.videos().insert(
@@ -113,6 +119,6 @@ def resumable_upload(insert_request, max_retries=10):
 
 
 if __name__ == "__main__":
+    print(get_publish_date())
     youtube = get_service()
     upload_video(youtube, "data/test/merged.mp4")
-    pass

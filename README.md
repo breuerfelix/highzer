@@ -11,12 +11,13 @@ Twitch Stream Analyzer
 
 ```bash
 poetry install
-poetry run python highzer/highzer.py
+poetry shell
+python highzer/highzer.py --help
 ```
 
-## Nice to know
+## Nice to Know
 
-[youtube channel](https://www.youtube.com/channel/UC0M8qvpFLG_QoimeBih_6nA)
+[YouTube Channel](https://www.youtube.com/channel/UC0M8qvpFLG_QoimeBih_6nA)
 
 ```bash
 export ID = ""

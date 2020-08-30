@@ -107,23 +107,25 @@ def schedule():
         pg = game.replace(" ", "").lower()
         ident = f"{week}_{pg}"
 
-        clips, merged = cut_clips(ident, 'week', game, None)
+        clips, merged = cut_clips(ident, "week", game, None)
         upload_video(merged, clips, game)
         print(f"uploaded video: {ident}")
 
-
-    upload_time = "19:00"
+    upload_time = "12:00"
     sched.every().monday.at(upload_time).do(do_clip, game="Minecraft")
     sched.every().tuesday.at(upload_time).do(do_clip, game="World of Warcraft")
     sched.every().wednesday.at(upload_time).do(do_clip, game="Dota 2")
     sched.every().thursday.at(upload_time).do(do_clip, game="VALORANT")
-    sched.every().friday.at(upload_time).do(do_clip, game="Counter Strike: Global Offensive")
+    sched.every().friday.at(upload_time).do(
+        do_clip, game="Counter Strike: Global Offensive"
+    )
     sched.every().saturday.at(upload_time).do(do_clip, game="Fortnite")
     sched.every().sunday.at(upload_time).do(do_clip, game="League of Legends")
 
     while True:
         sched.run_pending()
         time.sleep(1)
+
 
 @cli.command()
 def test():
