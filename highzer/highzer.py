@@ -97,7 +97,7 @@ def clip(ident, period, game, channel):
         return
 
     clips, merged = cut_clips(ident, period, game, channel)
-    upload_video(merged, clips, game or channel)
+    upload_video(ident, merged, clips, game or channel)
 
 
 @cli.command()
@@ -108,7 +108,7 @@ def schedule():
         ident = f"{week}_{pg}"
 
         clips, merged = cut_clips(ident, "week", game, None)
-        upload_video(merged, clips, game)
+        upload_video(ident, merged, clips, game)
         print(f"uploaded video: {ident}")
 
     upload_time = "12:00"

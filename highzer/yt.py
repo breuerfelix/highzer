@@ -8,7 +8,7 @@ import sys
 import random
 import time
 from datetime import date, datetime
-from utils import pretty_short_time, get_week
+from utils import pretty_short_time, get_week, locate_folder
 
 SCOPE = "https://www.googleapis.com/auth/youtube.upload"
 
@@ -19,8 +19,9 @@ def get_publish_date():
     return now.isoformat() + "Z"
 
 
-def upload_video(video_path, clips, cat):
-    service = get_service()
+def upload_video(ident, video_path, clips, cat):
+    folder = locate_folder(ident)
+
     description = ""
 
     tags = []
@@ -47,7 +48,18 @@ def upload_video(video_path, clips, cat):
         "tags": f"twitch highlight week{cw} {cat.replace(' ', '').lower()} {tags}",
     }
 
-    upload(service, video_path, snippet)
+    with open(f"{folder}/data.txt", "w+") as f:
+        f.write(snippet["title"])
+        f.write("\n")
+        f.write("\n")
+        f.write(snippet["description"])
+        f.write("\n")
+        f.write(snippet["tags"].replace(" ", ","))
+
+    # use this to reauthenticate my user everytime
+    service = get_service()
+    # TODO upload once the API got reviewd
+    #upload(service, video_path, snippet)
 
 
 def get_service():
@@ -70,6 +82,7 @@ def upload(service, video_path, snippet):
         # TODO change to public once the api is approved
         "status": {
             "privacyStatus": "private",
+            #"privacyStatus": "public", # TODO re-enable
             # "publishAt": get_publish_date(), # TODO re-enable
         },
     }
