@@ -59,7 +59,7 @@ def upload_video(ident, video_path, clips, cat):
     # use this to reauthenticate my user everytime
     service = get_service()
     # TODO upload once the API got reviewd
-    #upload(service, video_path, snippet)
+    # upload(service, video_path, snippet)
 
 
 def get_service():
@@ -82,7 +82,7 @@ def upload(service, video_path, snippet):
         # TODO change to public once the api is approved
         "status": {
             "privacyStatus": "private",
-            #"privacyStatus": "public", # TODO re-enable
+            # "privacyStatus": "public", # TODO re-enable
             # "publishAt": get_publish_date(), # TODO re-enable
         },
     }

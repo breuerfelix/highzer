@@ -8,7 +8,7 @@ from chat import analyze_chat
 from audio import analyze_audio, analyze_audio_test
 from fpeg import cut, merge
 from clip import cut_clips
-from yt import upload_video
+from yt import upload_video, get_service
 
 
 @click.group()
@@ -101,6 +101,12 @@ def clip(ident, period, game, channel):
 
 
 @cli.command()
+def login():
+    # creates oauth2.json file
+    get_service()
+
+
+@cli.command()
 def schedule():
     def do_clip(game):
         week = get_week()
@@ -131,9 +137,6 @@ def schedule():
 def test():
     print("imports working")
     return
-
-    highlights = analyze_audio_test(1)
-    pprint(highlights)
 
 
 if __name__ == "__main__":
