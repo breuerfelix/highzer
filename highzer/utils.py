@@ -65,8 +65,16 @@ def timer(org_function):
     return wrapper
 
 
+def get_base_folder():
+    folder = "data"
+
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+
+    return folder
+
 def locate_folder(ident):
-    folder = f"data/{ident}"
+    folder = f"{get_base_folder()}/{ident}"
 
     if not os.path.exists(folder):
         os.makedirs(folder)

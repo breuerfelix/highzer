@@ -7,8 +7,9 @@ import httplib2
 import sys
 import random
 import time
+import json
 from datetime import date, datetime
-from utils import pretty_short_time, get_week, locate_folder
+from utils import pretty_short_time, get_week, locate_folder, get_base_folder
 
 SCOPE = "https://www.googleapis.com/auth/youtube.upload"
 
@@ -19,7 +20,7 @@ def get_publish_date():
     return now.isoformat() + "Z"
 
 
-def upload_video(ident, video_path, clips, cat):
+def upload_video(ident, video_path, clips, cat, upload=False):
     folder = locate_folder(ident)
 
     description = ""
@@ -48,18 +49,17 @@ def upload_video(ident, video_path, clips, cat):
         "tags": f"twitch highlight week{cw} {cat.replace(' ', '').lower()} {tags}",
     }
 
-    with open(f"{folder}/data.txt", "w+") as f:
-        f.write(snippet["title"])
-        f.write("\n")
-        f.write("\n")
-        f.write(snippet["description"])
-        f.write("\n")
-        f.write(snippet["tags"].replace(" ", ","))
+    with open(f"{folder}/data.json", "w+") as f:
+        f.write(json.dumps(snippet))
+
+    with open(f"{get_base_folder()}/latest.txt", "w+") as f:
+        f.write(ident)
 
     # use this to reauthenticate my user everytime
     service = get_service()
-    # TODO upload once the API got reviewd
-    # upload(service, video_path, snippet)
+
+    if upload:
+        upload(service, video_path, snippet)
 
 
 def get_service():
@@ -79,11 +79,9 @@ def upload(service, video_path, snippet):
     snippet["categoryId"] = "20"
     body = {
         "snippet": snippet,
-        # TODO change to public once the api is approved
         "status": {
-            "privacyStatus": "private",
-            # "privacyStatus": "public", # TODO re-enable
-            # "publishAt": get_publish_date(), # TODO re-enable
+            "privacyStatus": "private", # public only works with reviewed API
+            # "publishAt": get_publish_date(), # only works with reviewed API
         },
     }
 
