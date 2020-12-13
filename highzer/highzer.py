@@ -3,7 +3,7 @@ import click
 import requests
 import schedule as sched
 import time
-from utils import run, pprint, locate_folder, get_week
+from utils import run, pprint, locate_folder, get_week, retry
 from chat import analyze_chat
 from audio import analyze_audio, analyze_audio_test
 from fpeg import cut, merge
@@ -108,6 +108,7 @@ def login():
 
 @cli.command()
 def schedule():
+    @retry
     def do_clip(game):
         week = get_week()
         pg = game.replace(" ", "").lower()

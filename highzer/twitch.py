@@ -9,7 +9,7 @@ HEADERS = {
 
 
 def get_top_clips(period, game, channel, limit=5, trending="false", language="en"):
-    url = f"https://api.twitch.tv/kraken/clips/top?"
+    url = "https://api.twitch.tv/kraken/clips/top?"
     params = {
         "period": period,
         "trending": trending,
