@@ -17,10 +17,10 @@ def analyze_chat(ident, chunk_size):
     for comment in sorted(data["comments"], key=lambda x: x["content_offset_seconds"]):
         offset = comment["content_offset_seconds"]
         msg = comment["message"]["body"]
-        # TODO filter message for commands
-        # if msg.startswith("!"):
-        # # filter out commands
-        # continue
+
+        if msg.startswith("!"):
+            # filter out commands
+            continue
 
         if offset > (chunk_count + 1) * chunk_size:
             now = chunk_count * chunk_size
