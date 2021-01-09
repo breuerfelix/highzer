@@ -1,11 +1,13 @@
 # highzer
 
-Twitch Stream Analyzer
+Twitch Stream Analyzer and Video Cutter
 
 ## Dependencies
 
 - ffmpeg
 - poetry
+
+__Recommended:__ Run your scripts in a container with the `Dockerfile` provided in this Repo.
 
 ## Setup and Run
 
@@ -15,36 +17,15 @@ poetry shell
 python highzer/highzer.py --help
 ```
 
-## Generate Google Credentials
-
-Create a new Google API project and add the YouTube Data API.  
-Create a file called `client_secrets.json` with the following content:
-```json
-{
-  "web": {
-    "client_id": "<client_id>",
-    "client_secret": "<client_secret>",
-    "redirect_uris": [],
-    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-    "token_uri": "https://accounts.google.com/o/oauth2/token"
-  }
-}
-```
-
-Run the following:
-```bash
-python highzer/highzer.py login
-```
-This prompts you to login with your Google account. It creates a file called `oauth2.json` which stores an access and refresh token for your account.  
-**Important:** If you want to run the application on a server, you need to copy those 2 files over!
-
 ## Nice to Know
 
 [YouTube Channel](https://www.youtube.com/channel/UC0M8qvpFLG_QoimeBih_6nA)
 
 ```bash
+# broadcast ID
 export ID = ""
-# download stream
+
+# download a broadcast
 streamlink -o "output.ts" "https://www.twitch.tv/videos/$ID" best
 # convert to mp4
 ffmpeg -i output.ts -c copy output.mp4
