@@ -3,5 +3,6 @@ oauth2.json
 client_secrets.json
 node_modules
 *.wav
+*.mp4
 __pycache__
 *.lock

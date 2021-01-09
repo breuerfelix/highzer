@@ -69,18 +69,16 @@ def array_chunk(arr, size):
     return split
 
 
-def timer(org_function):
-    def wrapper(*args, **kwargs):
-        start_time = timeit.default_timer()
+@decorator
+def timer(func, *args, **kwargs):
+    start_time = timeit.default_timer()
 
-        return_value = org_function(*args, **kwargs)
+    return_value = func(*args, **kwargs)
 
-        elapsed = timeit.default_timer() - start_time
-        print(f"Function {org_function.__name__} took {elapsed} seconds to complete.")
+    elapsed = timeit.default_timer() - start_time
+    print(f"Function {func.__name__} took {elapsed} seconds to complete.")
 
-        return return_value
-
-    return wrapper
+    return return_value
 
 
 def get_base_folder():

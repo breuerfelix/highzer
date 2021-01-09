@@ -8,7 +8,7 @@ from chat import analyze_chat
 from audio import analyze_audio, analyze_audio_test
 from fpeg import cut, merge
 from clip import cut_clips
-from yt import upload_video, get_service
+from yt import save_video
 
 
 @click.group()
@@ -96,14 +96,9 @@ def clip(ident, period, game, channel):
         print("Please provide a channel or a game!")
         return
 
+    print("Clipping video...")
     clips, merged = cut_clips(ident, period, game, channel)
-    upload_video(ident, merged, clips, game or channel)
-
-
-@cli.command()
-def login():
-    # creates oauth2.json file
-    get_service()
+    save_video(ident, merged, clips, game or channel)
 
 
 @cli.command()
@@ -115,7 +110,7 @@ def schedule():
         ident = f"{week}_{pg}"
 
         clips, merged = cut_clips(ident, "week", game, None)
-        upload_video(ident, merged, clips, game)
+        save_video(ident, merged, clips, game)
         print(f"uploaded video: {ident}")
 
     upload_time = "12:00"
@@ -141,4 +136,5 @@ def test():
 
 
 if __name__ == "__main__":
+    #clip('testing', 'week', 'leagueoflegends', None)
     cli()

@@ -1,17 +1,7 @@
-from oauth2client.client import flow_from_clientsecrets
-from apiclient.discovery import build
-from apiclient.http import MediaFileUpload
-from oauth2client.file import Storage
-from oauth2client.tools import run_flow
-import httplib2
-import sys
-import random
 import time
 import json
 from datetime import date, datetime
 from utils import pretty_short_time, get_week, locate_folder, get_base_folder
-
-SCOPE = "https://www.googleapis.com/auth/youtube.upload"
 
 
 def get_publish_date():
@@ -20,7 +10,7 @@ def get_publish_date():
     return now.isoformat() + "Z"
 
 
-def upload_video(ident, video_path, clips, cat, upload=False):
+def save_video(ident, video_path, clips, cat, upload=False):
     folder = locate_folder(ident)
 
     description = ""
@@ -52,87 +42,6 @@ def upload_video(ident, video_path, clips, cat, upload=False):
     with open(f"{folder}/data.json", "w+") as f:
         f.write(json.dumps(snippet))
 
+
     with open(f"{get_base_folder()}/latest.txt", "w+") as f:
         f.write(ident)
-
-    # use this to reauthenticate my user everytime
-    service = get_service()
-
-    if upload:
-        upload(service, video_path, snippet)
-
-
-def get_service():
-    flow = flow_from_clientsecrets("client_secrets.json", scope=SCOPE)
-    storage = Storage("oauth2.json")
-    credentials = storage.get()
-
-    if credentials is None or credentials.invalid:
-        credentials = run_flow(flow, storage, ["--noauth_local_webserver"])
-
-    cred = credentials.authorize(httplib2.Http())
-    service = build("youtube", "v3", http=cred)
-    return service
-
-
-def upload(service, video_path, snippet):
-    snippet["categoryId"] = "20"
-    body = {
-        "snippet": snippet,
-        "status": {
-            "privacyStatus": "private", # public only works with reviewed API
-            # "publishAt": get_publish_date(), # only works with reviewed API
-        },
-    }
-
-    insert_request = service.videos().insert(
-        part=",".join(body.keys()),
-        body=body,
-        media_body=MediaFileUpload(video_path, chunksize=-1, resumable=True),
-    )
-
-    resumable_upload(insert_request)
-
-
-# TODO handle upload better
-def resumable_upload(insert_request, max_retries=10):
-    httplib2.RETRIES = 1
-    RETRIABLE_EXCEPTIONS = (
-        httplib2.HttpLib2Error,
-        IOError,
-    )
-    response = None
-    error = None
-    retry = 0
-    while response is None:
-        try:
-            print("Uploading file...")
-            status, response = insert_request.next_chunk()
-            if response is not None:
-                if "id" in response:
-                    print("Video id '%s' was successfully uploaded." % response["id"])
-                    break
-                else:
-                    print(response)
-                    sys.exit(
-                        "The upload failed with an unexpected response: %s" % response
-                    )
-        except RETRIABLE_EXCEPTIONS as e:
-            error = "A retriable error occurred."
-            print(e)
-        if error is not None:
-            print(error)
-            retry += 1
-            if retry > max_retries:
-                sys.exit("No longer attempting to retry.")
-
-            max_sleep = 2 ** retry
-            sleep_seconds = random.random() * max_sleep
-            print("Sleeping %f seconds and then retrying..." % sleep_seconds)
-            time.sleep(sleep_seconds)
-
-
-if __name__ == "__main__":
-    print(get_publish_date())
-    youtube = get_service()
-    upload_video(youtube, "data/test/merged.mp4")
