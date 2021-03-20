@@ -28,11 +28,12 @@ RUN apt-get install -y --no-install-recommends --no-install-suggests \
   cp geckodriver /usr/local/bin/
 
 # installing python dependencies
-RUN apt-get install -y git && pip install poetry
+RUN apt-get install -y --no-install-recommends --no-install-suggests \
+  git
 
 COPY pyproject.toml .
-RUN poetry install
-
 COPY highzer highzer
 
-CMD ["poetry", "run", "highzer", "schedule"]
+RUN pip install .
+
+CMD ["highzer", "schedule"]
