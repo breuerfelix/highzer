@@ -5,14 +5,5 @@ services:
     image: felixbreuer/highzer:latest
     build: .
     volumes:
-      - ./oauth2.json:/usr/app/oauth2.json
-      - ./client_secrets.json:/usr/app/client_secrets.json
       - ./data:/usr/app/data
-  web:
-    image: nginx:alpine
-    volumes:
-      - ./data:/usr/share/nginx/html:ro
-    environment:
-      - VIRTUAL_HOST=highzer.felixbreuer.me
-      - VIRTUAL_PORT=80
-      - LETSENCRYPT_HOST=highzer.felixbreuer.me
+      - ./profile:/usr/app/profile

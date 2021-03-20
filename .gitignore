@@ -1,4 +1,6 @@
 data
+profile
+
 .env
 __pycache__
 chunk_list.txt

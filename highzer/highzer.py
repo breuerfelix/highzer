@@ -3,12 +3,12 @@ import click
 import requests
 import schedule as sched
 import time
-from utils import run, pprint, locate_folder, get_week, retry
-from chat import analyze_chat
-from audio import analyze_audio, analyze_audio_test
-from fpeg import cut, merge
-from clip import cut_clips
-from yt import save_video
+from .utils import run, pprint, locate_folder, get_week, retry
+from .chat import analyze_chat
+from .audio import analyze_audio, analyze_audio_test
+from .fpeg import cut, merge
+from .clip import get_clips, cut_clips, do_clips
+from .yt import save_video, upload_video
 
 
 @click.group()
@@ -97,44 +97,51 @@ def clip(ident, period, game, channel):
         return
 
     print("Clipping video...")
-    clips, merged = cut_clips(ident, period, game, channel)
-    save_video(ident, merged, clips, game or channel)
+    get_clips(ident, period, game, channel)
+    cut_clips(ident)
 
 
 @cli.command()
 def schedule():
-    @retry
-    def do_clip(game):
-        week = get_week()
-        pg = game.replace(" ", "").lower()
-        ident = f"{week}_{pg}"
-
-        clips, merged = cut_clips(ident, "week", game, None)
-        save_video(ident, merged, clips, game)
-        print(f"uploaded video: {ident}")
+    games = [
+        "Minecraft",
+        "World of Warcraft",
+        "Dota 2",
+        "VALORANT",
+        "Counter Strike: Global Offensive",
+        "Fortnite",
+        "League of Legends",
+        "Guild Wars 2",
+    ]
 
     upload_time = "12:00"
-    sched.every().monday.at(upload_time).do(do_clip, game="Minecraft")
-    sched.every().tuesday.at(upload_time).do(do_clip, game="World of Warcraft")
-    sched.every().wednesday.at(upload_time).do(do_clip, game="Dota 2")
-    sched.every().thursday.at(upload_time).do(do_clip, game="VALORANT")
-    sched.every().friday.at(upload_time).do(
-        do_clip, game="Counter Strike: Global Offensive"
-    )
-    sched.every().saturday.at(upload_time).do(do_clip, game="Fortnite")
-    sched.every().sunday.at(upload_time).do(do_clip, game="League of Legends")
+    sched.every().saturday.at(upload_time).do(do_clips, games=games)
 
     while True:
         sched.run_pending()
-        time.sleep(1)
+        time.sleep(10)
+
+
+@cli.command()
+def manual():
+    games = [
+        "Minecraft",
+        "World of Warcraft",
+        "Dota 2",
+        "VALORANT",
+        "Counter Strike: Global Offensive",
+        "Fortnite",
+        "League of Legends",
+        "Guild Wars 2",
+    ]
+
+    do_clips(games)
 
 
 @cli.command()
 def test():
     print("imports working")
-    return
 
 
 if __name__ == "__main__":
-    #clip('testing', 'week', 'leagueoflegends', None)
     cli()

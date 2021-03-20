@@ -1,5 +1,5 @@
 import json
-from utils import pretty_time, pprint, locate_folder
+from .utils import pretty_time, pprint, locate_folder
 
 
 def analyze_chat(ident, chunk_size):

@@ -1,0 +1,177 @@
+1616178470191	mozrunner::runner	INFO	Running command: "/etc/profiles/per-user/felix/bin/firefox" "-marionette" "-headless" "-foreground" "-no-remote" "-profile" "/run/user/1000/rust_mozprofileUmGvLO"
+*** You are running in headless mode.
+Crash Annotation GraphicsCriticalError: |[0][GFX1-]: glxtest: libpci missing (t=0.243308) [GFX1-]: glxtest: libpci missing
+Exiting due to channel error.
+1616179731864	mozrunner::runner	INFO	Running command: "/etc/profiles/per-user/felix/bin/firefox" "-marionette" "-headless" "-foreground" "-no-remote" "-profile" "/run/user/1000/rust_mozprofilec0Utxc"
+*** You are running in headless mode.
+Crash Annotation GraphicsCriticalError: |[0][GFX1-]: glxtest: libpci missing (t=0.275986) [GFX1-]: glxtest: libpci missing
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:17669): GLib-GObject-CRITICAL **: 19:48:52.535: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:17734): GLib-GObject-CRITICAL **: 19:48:52.920: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:17756): GLib-GObject-CRITICAL **: 19:48:53.097: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+1616179733194	Marionette	INFO	Listening on port 43465
+1616179733288	Marionette	WARN	TLS certificate errors will be ignored for this session
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:17863): GLib-GObject-CRITICAL **: 19:48:53.534: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+[Child 17669, MediaDecoderStateMachine #1] WARNING: Decoder=7fab029b7400 state=DECODING_METADATA Decode metadata failed, shutting down decoder: file /build/firefox-86.0.1/dom/media/MediaDecoderStateMachine.cpp:368
+[Child 17669, MediaDecoderStateMachine #1] WARNING: Decoder=7fab029b7400 Decode error: NS_ERROR_DOM_MEDIA_METADATA_ERR (0x806e0006) - static mozilla::MP4Metadata::ResultAndByteBuffer mozilla::MP4Metadata::Metadata(mozilla::ByteStream*): Cannot parse metadata: file /build/firefox-86.0.1/dom/media/MediaDecoderStateMachine.cpp:3474
+JavaScript warning: https://www.google.com/js/th/LNj0IEq27xQ-GndNNzE4iNJu3coUKubOsLMYHBcWqNU.js line 1 > eval line 528 > eval line 1 > eval, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://www.google.com/js/th/LNj0IEq27xQ-GndNNzE4iNJu3coUKubOsLMYHBcWqNU.js line 1 > eval line 528 > eval line 1 > eval, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+1616180011528	mozrunner::runner	INFO	Running command: "/etc/profiles/per-user/felix/bin/firefox" "-marionette" "-headless" "-foreground" "-no-remote" "-profile" "/run/user/1000/rust_mozprofilemF5W7I"
+*** You are running in headless mode.
+Crash Annotation GraphicsCriticalError: |[0][GFX1-]: glxtest: libpci missing (t=0.197881) [GFX1-]: glxtest: libpci missing
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:19443): GLib-GObject-CRITICAL **: 19:53:32.082: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:19497): GLib-GObject-CRITICAL **: 19:53:32.469: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+1616180012624	Marionette	INFO	Listening on port 37325
+1616180012665	Marionette	WARN	TLS certificate errors will be ignored for this session
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:19519): GLib-GObject-CRITICAL **: 19:53:32.665: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:19588): GLib-GObject-CRITICAL **: 19:53:33.115: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+[Child 19443, MediaDecoderStateMachine #1] WARNING: Decoder=7fdade85f400 state=DECODING_METADATA Decode metadata failed, shutting down decoder: file /build/firefox-86.0.1/dom/media/MediaDecoderStateMachine.cpp:368
+[Child 19443, MediaDecoderStateMachine #1] WARNING: Decoder=7fdade85f400 Decode error: NS_ERROR_DOM_MEDIA_METADATA_ERR (0x806e0006) - static mozilla::MP4Metadata::ResultAndByteBuffer mozilla::MP4Metadata::Metadata(mozilla::ByteStream*): Cannot parse metadata: file /build/firefox-86.0.1/dom/media/MediaDecoderStateMachine.cpp:3474
+JavaScript warning: https://www.google.com/js/th/LNj0IEq27xQ-GndNNzE4iNJu3coUKubOsLMYHBcWqNU.js line 1 > eval line 1298 > eval, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://www.google.com/js/th/LNj0IEq27xQ-GndNNzE4iNJu3coUKubOsLMYHBcWqNU.js line 1 > eval line 1298 > eval, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+1616180322892	mozrunner::runner	INFO	Running command: "/etc/profiles/per-user/felix/bin/firefox" "-marionette" "-headless" "-foreground" "-no-remote" "-profile" "/run/user/1000/rust_mozprofileCozzGJ"
+*** You are running in headless mode.
+Crash Annotation GraphicsCriticalError: |[0][GFX1-]: glxtest: libpci missing (t=0.300508) [GFX1-]: glxtest: libpci missing
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:21629): GLib-GObject-CRITICAL **: 19:58:43.598: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:21694): GLib-GObject-CRITICAL **: 19:58:43.994: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+1616180324181	Marionette	INFO	Listening on port 34289
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:21716): GLib-GObject-CRITICAL **: 19:58:44.202: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+1616180324213	Marionette	WARN	TLS certificate errors will be ignored for this session
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:21769): GLib-GObject-CRITICAL **: 19:58:44.569: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+[Child 21629, MediaDecoderStateMachine #1] WARNING: Decoder=7f336c1ce400 state=DECODING_METADATA Decode metadata failed, shutting down decoder: file /build/firefox-86.0.1/dom/media/MediaDecoderStateMachine.cpp:368
+[Child 21629, MediaDecoderStateMachine #1] WARNING: Decoder=7f336c1ce400 Decode error: NS_ERROR_DOM_MEDIA_METADATA_ERR (0x806e0006) - static mozilla::MP4Metadata::ResultAndByteBuffer mozilla::MP4Metadata::Metadata(mozilla::ByteStream*): Cannot parse metadata: file /build/firefox-86.0.1/dom/media/MediaDecoderStateMachine.cpp:3474
+JavaScript warning: https://www.google.com/js/th/LNj0IEq27xQ-GndNNzE4iNJu3coUKubOsLMYHBcWqNU.js line 1 > eval line 3824 > eval, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://www.google.com/js/th/LNj0IEq27xQ-GndNNzE4iNJu3coUKubOsLMYHBcWqNU.js line 1 > eval line 3824 > eval, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+1616180512010	mozrunner::runner	INFO	Running command: "/etc/profiles/per-user/felix/bin/firefox" "-marionette" "-headless" "-foreground" "-no-remote" "-profile" "/run/user/1000/rust_mozprofileiYxufk"
+*** You are running in headless mode.
+Crash Annotation GraphicsCriticalError: |[0][GFX1-]: glxtest: libpci missing (t=0.229811) [GFX1-]: glxtest: libpci missing
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:22943): GLib-GObject-CRITICAL **: 20:01:52.657: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:23009): GLib-GObject-CRITICAL **: 20:01:53.050: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:23031): GLib-GObject-CRITICAL **: 20:01:53.271: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+1616180513507	Marionette	INFO	Listening on port 45505
+1616180513536	Marionette	WARN	TLS certificate errors will be ignored for this session
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:23094): GLib-GObject-CRITICAL **: 20:01:53.631: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+[Child 22943, MediaDecoderStateMachine #1] WARNING: Decoder=7f41b9593000 state=DECODING_METADATA Decode metadata failed, shutting down decoder: file /build/firefox-86.0.1/dom/media/MediaDecoderStateMachine.cpp:368
+[Child 22943, MediaDecoderStateMachine #1] WARNING: Decoder=7f41b9593000 Decode error: NS_ERROR_DOM_MEDIA_METADATA_ERR (0x806e0006) - static mozilla::MP4Metadata::ResultAndByteBuffer mozilla::MP4Metadata::Metadata(mozilla::ByteStream*): Cannot parse metadata: file /build/firefox-86.0.1/dom/media/MediaDecoderStateMachine.cpp:3474
+JavaScript warning: https://www.google.com/js/th/LNj0IEq27xQ-GndNNzE4iNJu3coUKubOsLMYHBcWqNU.js line 1 > eval line 3619 > eval line 1 > eval, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://www.google.com/js/th/LNj0IEq27xQ-GndNNzE4iNJu3coUKubOsLMYHBcWqNU.js line 1 > eval line 3619 > eval line 1 > eval, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+1616181335289	mozrunner::runner	INFO	Running command: "/etc/profiles/per-user/felix/bin/firefox" "-marionette" "-headless" "-foreground" "-no-remote" "-profile" "/run/user/1000/rust_mozprofileadu6kU"
+*** You are running in headless mode.
+Crash Annotation GraphicsCriticalError: |[0][GFX1-]: glxtest: libpci missing (t=0.282112) [GFX1-]: glxtest: libpci missing
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:28548): GLib-GObject-CRITICAL **: 20:15:35.946: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:28602): GLib-GObject-CRITICAL **: 20:15:36.381: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:28624): GLib-GObject-CRITICAL **: 20:15:36.581: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+1616181336614	Marionette	INFO	Listening on port 41049
+1616181336716	Marionette	WARN	TLS certificate errors will be ignored for this session
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:28672): GLib-GObject-CRITICAL **: 20:15:36.992: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+JavaScript warning: https://www.google.com/js/th/LNj0IEq27xQ-GndNNzE4iNJu3coUKubOsLMYHBcWqNU.js line 1 > eval line 7207 > eval, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://www.google.com/js/th/LNj0IEq27xQ-GndNNzE4iNJu3coUKubOsLMYHBcWqNU.js line 1 > eval line 7207 > eval, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+1616181814061	mozrunner::runner	INFO	Running command: "/etc/profiles/per-user/felix/bin/firefox" "-marionette" "-headless" "-foreground" "-no-remote" "-profile" "/run/user/1000/rust_mozprofileJiX4j6"
+*** You are running in headless mode.
+Crash Annotation GraphicsCriticalError: |[0][GFX1-]: glxtest: libpci missing (t=0.255187) [GFX1-]: glxtest: libpci missing
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:31958): GLib-GObject-CRITICAL **: 20:23:34.731: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:32023): GLib-GObject-CRITICAL **: 20:23:35.138: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:32045): GLib-GObject-CRITICAL **: 20:23:35.337: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+1616181815363	Marionette	INFO	Listening on port 36887
+1616181815380	Marionette	WARN	TLS certificate errors will be ignored for this session
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:32113): GLib-GObject-CRITICAL **: 20:23:35.735: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+JavaScript warning: https://www.google.com/js/th/LNj0IEq27xQ-GndNNzE4iNJu3coUKubOsLMYHBcWqNU.js line 1 > eval line 5604 > eval, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://www.google.com/js/th/LNj0IEq27xQ-GndNNzE4iNJu3coUKubOsLMYHBcWqNU.js line 1 > eval line 5604 > eval, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+1616182687966	mozrunner::runner	INFO	Running command: "/etc/profiles/per-user/felix/bin/firefox" "-marionette" "-headless" "-foreground" "-no-remote" "-profile" "/run/user/1000/rust_mozprofileFOfnqH"
+*** You are running in headless mode.
+Crash Annotation GraphicsCriticalError: |[0][GFX1-]: glxtest: libpci missing (t=0.160717) [GFX1-]: glxtest: libpci missing
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:5451): GLib-GObject-CRITICAL **: 20:38:08.545: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:5506): GLib-GObject-CRITICAL **: 20:38:08.940: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+1616182689106	Marionette	INFO	Listening on port 36041
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:5531): GLib-GObject-CRITICAL **: 20:38:09.154: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+1616182689185	Marionette	WARN	TLS certificate errors will be ignored for this session
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:5620): GLib-GObject-CRITICAL **: 20:38:09.548: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+JavaScript warning: https://www.google.com/js/th/LNj0IEq27xQ-GndNNzE4iNJu3coUKubOsLMYHBcWqNU.js line 1 > eval line 383 > eval line 1 > eval, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://www.google.com/js/th/LNj0IEq27xQ-GndNNzE4iNJu3coUKubOsLMYHBcWqNU.js line 1 > eval line 383 > eval line 1 > eval, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+1616185803204	mozrunner::runner	INFO	Running command: "/etc/profiles/per-user/felix/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/run/user/1000/rust_mozprofileJr43fe"
+Crash Annotation GraphicsCriticalError: |[0][GFX1-]: glxtest: libpci missing (t=0.204737) [GFX1-]: glxtest: libpci missing
+1616185805000	Marionette	INFO	Listening on port 33573
+1616185805021	Marionette	WARN	TLS certificate errors will be ignored for this session
+1616185855921	Marionette	INFO	Stopped listening on port 33573
+1616185884210	mozrunner::runner	INFO	Running command: "/etc/profiles/per-user/felix/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/run/user/1000/rust_mozprofileVcRANr"
+Crash Annotation GraphicsCriticalError: |[0][GFX1-]: glxtest: libpci missing (t=0.200883) [GFX1-]: glxtest: libpci missing
+1616185885703	Marionette	INFO	Listening on port 35229
+1616185885728	Marionette	WARN	TLS certificate errors will be ignored for this session
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Crash Annotation GraphicsCriticalError: |[C0][GFX1-]: Receive IPC close with reason=AbnormalShutdown (t=31.1608) Exiting due to channel error.
+Crash Annotation GraphicsCriticalError: |[C0][GFX1-]: Receive IPC close with reason=AbnormalShutdown (t=31.9413) 1616185960770	mozrunner::runner	INFO	Running command: "/etc/profiles/per-user/felix/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/run/user/1000/rust_mozprofile4CdKdk"
+Crash Annotation GraphicsCriticalError: |[0][GFX1-]: glxtest: libpci missing (t=0.158073) [GFX1-]: glxtest: libpci missing
+1616185962365	Marionette	INFO	Listening on port 38217
+1616185962421	Marionette	WARN	TLS certificate errors will be ignored for this session
+Exiting due to channel error.
+Crash Annotation GraphicsCriticalError: |[C0][GFX1-]: Receive IPC close with reason=AbnormalShutdown (t=21.8354) Exiting due to channel error.
+Crash Annotation GraphicsCriticalError: |[C0][GFX1-]: Receive IPC close with reason=AbnormalShutdown (t=22.1909) Exiting due to channel error.
+Exiting due to channel error.
+Crash Annotation GraphicsCriticalError: |[C0][GFX1-]: Receive IPC close with reason=AbnormalShutdown (t=23.2102) 1616186040722	mozrunner::runner	INFO	Running command: "/etc/profiles/per-user/felix/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/run/user/1000/rust_mozprofileLe9L6p"
+Crash Annotation GraphicsCriticalError: |[0][GFX1-]: glxtest: libpci missing (t=0.130128) [GFX1-]: glxtest: libpci missing
+1616186042116	Marionette	INFO	Listening on port 43977
+1616186042138	Marionette	WARN	TLS certificate errors will be ignored for this session
+Exiting due to channel error.
+Crash Annotation GraphicsCriticalError: |[C0][GFX1-]: Receive IPC close with reason=AbnormalShutdown (t=18.5945) Exiting due to channel error.
+Exiting due to channel error.
+Crash Annotation GraphicsCriticalError: |[C0][GFX1-]: Receive IPC close with reason=AbnormalShutdown (t=19.182) Exiting due to channel error.
+Crash Annotation GraphicsCriticalError: |[C0][GFX1-]: Receive IPC close with reason=AbnormalShutdown (t=19.9743) 1616186089379	mozrunner::runner	INFO	Running command: "/etc/profiles/per-user/felix/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/run/user/1000/rust_mozprofilehSQKN2"
+Crash Annotation GraphicsCriticalError: |[0][GFX1-]: glxtest: libpci missing (t=0.147517) [GFX1-]: glxtest: libpci missing
+1616186091031	Marionette	INFO	Listening on port 33263
+1616186091096	Marionette	WARN	TLS certificate errors will be ignored for this session
+Exiting due to channel error.
+Crash Annotation GraphicsCriticalError: |[C0][GFX1-]: Receive IPC close with reason=AbnormalShutdown (t=25.308) Exiting due to channel error.
+Exiting due to channel error.
+Crash Annotation GraphicsCriticalError: |[C0][GFX1-]: Receive IPC close with reason=AbnormalShutdown (t=25.6234) Exiting due to channel error.
+1616186181471	mozrunner::runner	INFO	Running command: "/etc/profiles/per-user/felix/bin/firefox" "-marionette" "-headless" "-foreground" "-no-remote" "-profile" "/run/user/1000/rust_mozprofile8oqFN8"
+*** You are running in headless mode.
+Crash Annotation GraphicsCriticalError: |[0][GFX1-]: glxtest: libpci missing (t=0.118504) [GFX1-]: glxtest: libpci missing
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:30552): GLib-GObject-CRITICAL **: 21:36:21.876: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:30603): GLib-GObject-CRITICAL **: 21:36:22.132: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+1616186182228	Marionette	INFO	Listening on port 45735
+1616186182287	Marionette	WARN	TLS certificate errors will be ignored for this session
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:30628): GLib-GObject-CRITICAL **: 21:36:22.295: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+
+(/nix/store/mwiqj2z3vn0gclqdi7mlzsqw3zrxqb96-firefox-unwrapped-86.0.1/lib/firefox/firefox:30716): GLib-GObject-CRITICAL **: 21:36:22.889: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+JavaScript warning: https://www.google.com/js/th/LNj0IEq27xQ-GndNNzE4iNJu3coUKubOsLMYHBcWqNU.js line 1 > eval line 2729 > eval line 1 > eval, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://www.google.com/js/th/LNj0IEq27xQ-GndNNzE4iNJu3coUKubOsLMYHBcWqNU.js line 1 > eval line 2729 > eval line 1 > eval, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).

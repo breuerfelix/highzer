@@ -4,6 +4,9 @@ version = "0.1.0"
 description = "Twitch Stream Analyzer"
 authors = ["Felix Breuer <f.breuer94@gmail.com>"]
 
+[tool.poetry.scripts]
+highzer = "highzer.highzer:cli"
+
 [tool.poetry.dependencies]
 python = "^3.8"
 requests = "^2.24.0"
@@ -13,8 +16,11 @@ python-ffmpeg = "^1.0.11"
 schedule = "^0.6.0"
 scipy = "1.4.1"
 moviepy = "^1.0.3"
+path = "^15.1.2"
+opplast = {git = "https://github.com/breuerfelix/opplast", rev = "main"}
 
 [tool.poetry.dev-dependencies]
+pytest = "^6.2.2"
 
 [build-system]
 requires = ["poetry>=0.12"]

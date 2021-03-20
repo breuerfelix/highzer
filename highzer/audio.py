@@ -2,8 +2,8 @@ import os
 import math
 import scipy.io.wavfile as wav
 import numpy as np
-from utils import timer, array_chunk, pprint, pretty_time
-from utils import convert_data, locate_folder
+from .utils import timer, array_chunk, pprint, pretty_time
+from .utils import convert_data, locate_folder
 
 
 def _rms(arr):

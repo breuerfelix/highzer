@@ -6,6 +6,9 @@ Twitch Stream Analyzer and Video Cutter
 
 - ffmpeg
 - poetry
+- selenium
+- firefox
+- geckodriver
 
 __Recommended:__ Run your scripts in a container with the `Dockerfile` provided in this Repo.
 
@@ -19,7 +22,7 @@ python highzer/highzer.py --help
 
 ## Nice to Know
 
-[YouTube Channel](https://www.youtube.com/channel/UC0M8qvpFLG_QoimeBih_6nA)
+[YouTube Channel](https://www.youtube.com/channel/UC0M8qvpFLG_QoimeBih_6nA) which i automate with this script.
 
 ```bash
 # broadcast ID
@@ -43,3 +46,5 @@ ffmpeg -i raw.mp4 -map 0:a -segment_time 00:30:00 -f segment chunk%03d.wav
 ## ToDo
 
 - package this to pypi
+- schedule videos
+- add videos to playlist

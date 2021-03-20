@@ -50,6 +50,10 @@ def pprint(data):
     print(json.dumps(data, indent=2, sort_keys=True))
 
 
+def log(ident, *args):
+    print(f'{ident} - ', *args)
+
+
 def run(*args):
     # return subprocess.run([str(arg) for arg in args], check=True)
     # subprocess.run(["bash", "-c", "'ls data'"])

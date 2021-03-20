@@ -1,4 +1,4 @@
-from config import CLIENT_ID
+from .config import CLIENT_ID
 import requests
 import urllib.parse
 
@@ -24,7 +24,8 @@ def get_top_clips(period, game, channel, limit=5, trending="false", language="en
         params["channel"] = channel
 
     url += urllib.parse.urlencode(params)
-    return requests.get(url, headers=HEADERS).json()["clips"]
+    res = requests.get(url, headers=HEADERS).json()
+    return res["clips"]
 
 
 def get_clip_info(slug):
