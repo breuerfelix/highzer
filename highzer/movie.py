@@ -1,7 +1,11 @@
+import os
 from moviepy.editor import VideoFileClip, concatenate_videoclips, TextClip, CompositeVideoClip
 
 
-def concat_clips(files, out_file):
+def concat_clips(files, out_file, force=False):
+    if not force and os.path.isfile(out_file):
+        print("Video already created:", out_file)
+
     clips = list()
     for i, file in enumerate(files):
         clip = VideoFileClip(file).resize((1920, 1080)) \
@@ -17,8 +21,3 @@ def concat_clips(files, out_file):
 
     final_clip = concatenate_videoclips(clips, method="chain")
     final_clip.write_videofile(out_file)
-
-
-if __name__ == '__main__':
-    files = ['small.mp4', 'mid.mp4', 'large.mp4']
-    concat_clips(files, 'out.mp4')
