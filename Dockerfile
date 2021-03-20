@@ -36,4 +36,7 @@ COPY highzer highzer
 
 RUN pip install .
 
+# otherwhise logs will not get printed to docker logs
+ENV PYTHONUNBUFFERED=1
+
 CMD ["highzer", "schedule"]

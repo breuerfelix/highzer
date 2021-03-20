@@ -5,6 +5,7 @@ from moviepy.editor import VideoFileClip, concatenate_videoclips, TextClip, Comp
 def concat_clips(files, out_file, force=False):
     if not force and os.path.isfile(out_file):
         print("Video already created:", out_file)
+        return
 
     clips = list()
     for i, file in enumerate(files):
