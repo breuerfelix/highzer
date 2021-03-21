@@ -9,18 +9,18 @@ from decorator import decorator
 
 
 @decorator
-def retry(func, amount=3, interval=30 * 60, *args, **kwargs):
+def retry(func, amount=3, interval=30, *args, **kwargs):
     counter = 0
     while 1:
         try:
             return func(*args, **kwargs)
         except Exception as e:
+            # TODO print the error
             counter += 1
 
             if counter >= amount:
                 raise e
 
-            # sleep for half an hours
             time.sleep(interval)
 
 

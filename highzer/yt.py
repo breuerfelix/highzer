@@ -47,6 +47,8 @@ def save_video(ident, video_path, clips, category):
     with open(f"{folder}/data.json", "w+") as f:
         f.write(json.dumps(snippet))
 
+
+# TODO maybe retry operator?
 def upload_video(ident):
     profile = './profile'
     folder = locate_folder(ident)

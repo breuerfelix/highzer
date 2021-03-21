@@ -102,6 +102,16 @@ def clip(ident, period, game, channel):
 
 
 @cli.command()
+@click.argument("ident")
+def ident(ident):
+    clips, merged, game = cut_clips(ident)
+    save_video(ident, merged, clips, game)
+    upload_video(ident)
+    print(f"uploaded video: {ident}")
+
+
+
+@cli.command()
 def schedule():
     games = [
         "Minecraft",

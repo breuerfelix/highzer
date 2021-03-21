@@ -74,7 +74,7 @@ def do_clips(games):
         identifiers.append(ident)
         get_clips(ident, 'week', game, None)
         # sleep to prevent ddos to twitch
-        time.sleep(2)
+        time.sleep(5)
 
     for ident in identifiers:
         clips, merged, game = cut_clips(ident)
