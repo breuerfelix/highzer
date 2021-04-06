@@ -4,7 +4,7 @@ import timeit
 import numpy as np
 import os
 import time
-from datetime import date
+from datetime import date, datetime
 from decorator import decorator
 
 
@@ -39,6 +39,10 @@ def _sec_to_time(secs):
 def pretty_time(secs):
     hours, minutes, seconds = _sec_to_time(secs)
     return f"{hours:02}:{minutes:02}:{seconds:02}"
+
+
+def now():
+    return datetime.now().timestamp()
 
 
 def pretty_short_time(secs):

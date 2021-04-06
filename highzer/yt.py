@@ -3,7 +3,7 @@ import json
 from path import Path
 from datetime import date, datetime
 from opplast import Upload
-from .utils import pretty_short_time, get_week, locate_folder, get_base_folder
+from .utils import pretty_short_time, get_week, locate_folder, now
 
 
 def get_publish_date():
@@ -75,6 +75,9 @@ def upload_video(ident):
             break
         except:
             print('Video uploaded failed.')
+            stamp = now()
+            ff.driver.save_screenshot(f'{folder}/error_{stamp}.png')
+
 
         ff.close()
         time.sleep(10)
