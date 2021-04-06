@@ -48,7 +48,6 @@ def save_video(ident, video_path, clips, category):
         f.write(json.dumps(snippet))
 
 
-# TODO maybe retry operator?
 def upload_video(ident):
     profile = './profile'
     folder = locate_folder(ident)
@@ -59,10 +58,24 @@ def upload_video(ident):
     meta = json.loads(raw)
     meta['file'] = f'{folder}/merged.mp4'
 
-    ff = Upload(Path(profile).abspath(), 5, True, True)
-    uploaded, videoid = ff.upload(meta)
-    if not uploaded:
-        print('Video not uploaded!!', ident)
-        return
+    counter = 1
 
-    print(f'Uploaded Video: {ident} with ID: {videoid}')
+    while counter < 4:
+        print(f'Uploading attempt: {counter}')
+        ff = Upload(Path(profile).abspath(), 5, True, True)
+
+        try:
+            uploaded, videoid = ff.upload(meta)
+            ff.close()
+
+            if not uploaded:
+                raise BaseException('not uploaded')
+
+            print(f'Uploaded Video: {ident} with ID: {videoid}')
+            break
+        except:
+            print('Video uploaded failed.')
+
+        ff.close()
+        time.sleep(10)
+        counter += 1
