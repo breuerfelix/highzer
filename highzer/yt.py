@@ -69,14 +69,18 @@ def upload_video(ident):
             ff.close()
 
             if not uploaded:
-                raise BaseException('not uploaded')
+                print(f'Video {ident} not uploaded, skipping')
 
             print(f'Uploaded Video: {ident} with ID: {videoid}')
             break
         except:
             print('Video uploaded failed.')
             stamp = now()
-            ff.driver.save_screenshot(f'{folder}/error_{stamp}.png')
+            filepath = f'{folder}/error_{stamp}'
+            ff.driver.save_screenshot(filepath + '.png')
+
+            with open(filepath + '.html') as f:
+                f.write(ff.driver.find_element_by_xpath('//html').get_attribute('outerHTML'))
 
 
         ff.close()
