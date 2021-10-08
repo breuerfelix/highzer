@@ -31,11 +31,11 @@ RUN apt-get install -y --no-install-recommends --no-install-suggests \
 RUN apt-get install -y --no-install-recommends --no-install-suggests \
   git
 
-# install dependencies for python
 COPY pyproject.toml .
-RUN pip install .
-
 COPY highzer highzer
+
+# install dependencies for python
+RUN pip install .
 
 # otherwhise logs will not get printed to docker logs
 ENV PYTHONUNBUFFERED=1
