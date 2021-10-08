@@ -14,7 +14,7 @@ click = "^7.1.2"
 numpy = "^1.19.1"
 python-ffmpeg = "^1.0.11"
 schedule = "^0.6.0"
-scipy = "1.4.1"
+#scipy = "^1.7.0"
 moviepy = "^1.0.3"
 path = "^15.1.2"
 opplast = {git = "https://github.com/breuerfelix/opplast", rev = "main"}

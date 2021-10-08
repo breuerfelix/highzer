@@ -1,12 +1,12 @@
 import os
 import click
-import requests
+#import requests
 import schedule as sched
 import time
-from .utils import run, pprint, locate_folder, get_week, retry
-from .chat import analyze_chat
-from .audio import analyze_audio, analyze_audio_test
-from .fpeg import cut, merge
+from .utils import run, locate_folder
+#from .chat import analyze_chat
+#from .audio import analyze_audio, analyze_audio_test
+#from .fpeg import cut, merge
 from .clip import get_clips, cut_clips, do_clips
 from .yt import save_video, upload_video
 
@@ -58,30 +58,30 @@ def convert(ident):
     # run("ffmpeg", "-i", f"{folder}/raw.mp4", "-map", "0:a", f"{folder}/sound.mp3")
 
 
-@cli.command()
-@click.argument("ident")
-@click.option("-c", "--chunk-size", default=30, help="in seconds", show_default=True)
-def analyze(ident, chunk_size=30):
-    folder = locate_folder(ident)
-    # analyze_chat(ident, chunk_size)
+# @cli.command()
+# @click.argument("ident")
+# @click.option("-c", "--chunk-size", default=30, help="in seconds", show_default=True)
+# def analyze(ident, chunk_size=30):
+    # folder = locate_folder(ident)
+    # # analyze_chat(ident, chunk_size)
 
-    highlights = analyze_audio(ident, chunk_size)
+    # highlights = analyze_audio(ident, chunk_size)
 
-    files = []
-    for index, high in enumerate(highlights):
-        out_file = f"{folder}/chunk{index:03d}.mp4"
-        files.append(out_file)
-        cut(
-            f"{folder}/raw.mp4",
-            out_file,
-            high["from"] - 5,
-            high["length"] + chunk_size + 5,
-        )
+    # files = []
+    # for index, high in enumerate(highlights):
+        # out_file = f"{folder}/chunk{index:03d}.mp4"
+        # files.append(out_file)
+        # cut(
+            # f"{folder}/raw.mp4",
+            # out_file,
+            # high["from"] - 5,
+            # high["length"] + chunk_size + 5,
+        # )
 
-    merge(files, f"{folder}/highlight.mp4")
+    # merge(files, f"{folder}/highlight.mp4")
 
-    for chunk in files:
-        os.remove(chunk)
+    # for chunk in files:
+        # os.remove(chunk)
 
 
 @cli.command()
@@ -113,6 +113,8 @@ def ident(ident):
 
 @cli.command()
 def schedule():
+    print("starting schedule")
+
     games = [
         "Minecraft",
         "World of Warcraft",
