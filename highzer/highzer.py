@@ -110,7 +110,6 @@ def ident(ident):
     print(f"uploaded video: {ident}")
 
 
-
 @cli.command()
 def schedule():
     print("starting schedule")

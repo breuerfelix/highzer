@@ -56,16 +56,16 @@ def upload_video(ident):
         raw = f.read()
 
     meta = json.loads(raw)
-    meta['file'] = f'{folder}/merged.mp4'
+    meta['file'] = Path(f'{folder}/merged.mp4').abspath()
 
     counter = 1
 
     while counter < 4:
         print(f'Uploading attempt: {counter}')
-        ff = Upload(Path(profile).abspath(), 5, True, True)
+        ff = Upload(Path(profile).abspath(), "geckodriver", 10, True, True)
 
         try:
-            uploaded, videoid = ff.upload(meta)
+            uploaded, videoid = ff.upload(meta['file'], meta['title'], meta['description'], "", meta['tags'])
             ff.close()
 
             if not uploaded:
@@ -75,11 +75,11 @@ def upload_video(ident):
             break
         except:
             print('Video uploaded failed.')
-            stamp = now()
+            stamp = str(now()).replace(".", "-")
             filepath = f'{folder}/error_{stamp}'
-            ff.driver.save_screenshot(filepath + '.png')
+            ff.driver.save_screenshot(Path(filepath + '.png').abspath())
 
-            with open(filepath + '.html') as f:
+            with open(Path(filepath + '.html').abspath()) as f:
                 f.write(ff.driver.find_element_by_xpath('//html').get_attribute('outerHTML'))
 
 
