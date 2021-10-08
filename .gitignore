@@ -1,6 +1,8 @@
 data
 profile
 
+.vim
+
 .env
 __pycache__
 chunk_list.txt

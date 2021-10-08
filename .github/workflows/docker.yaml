@@ -36,7 +36,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          platforms: linux/amd64,linux/arm64,darwin/amd64,linux/aarch64,darwin/aarch64
+          platforms: linux/amd64,linux/arm64,linux/aarch64
           push: true
           tags: |
             felixbreuer/highzer:latest
