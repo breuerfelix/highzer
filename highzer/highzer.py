@@ -98,7 +98,8 @@ def clip(ident, period, game, channel):
 
     print("Clipping video...")
     get_clips(ident, period, game, channel)
-    cut_clips(ident)
+    clips, merged, game = cut_clips(ident)
+    save_video(ident, merged, clips, game)
 
 
 @cli.command()
