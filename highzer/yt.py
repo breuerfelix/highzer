@@ -79,7 +79,7 @@ def upload_video(ident):
             filepath = f'{folder}/error_{stamp}'
             ff.driver.save_screenshot(Path(filepath + '.png').abspath())
 
-            with open(Path(filepath + '.html').abspath()) as f:
+            with open(Path(filepath + '.html').abspath(), "w+") as f:
                 f.write(ff.driver.find_element_by_xpath('//html').get_attribute('outerHTML'))
 
 

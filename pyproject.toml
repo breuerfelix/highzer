@@ -21,8 +21,13 @@ schedule = "^0.6.0"
 moviepy = "^1.0.3"
 path = "^15.1.2"
 
-# pin this version because of nix module
+# pinned versions
+
+# nix module is already built
 cryptography = "3.4.*"
+
+# 4.x yields geckodriver error code 64
+selenium = "3.*"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.2"
