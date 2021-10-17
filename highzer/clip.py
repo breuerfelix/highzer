@@ -2,31 +2,43 @@ import os
 import requests
 import json
 import time
-from .utils import pprint, locate_folder, log, get_week
+from .utils import locate_folder, log
 from .twitch import get_top_clips
-from .fpeg import concat, sample, merge, convert, concat_fast, cat
 from .movie import concat_clips
 from .yt import save_video, upload_video
 
 
-def get_clips(ident, period, game, channel):
-    res = get_top_clips(period, game, channel, limit=30)
+def get_clips(ident, period, game, channel, n = 0, limit = 30, duration = 5, force = False):
+    folder = locate_folder(ident)
+    filename = f"{folder}/clips.json"
+
+    if not force and os.path.isfile(filename):
+        log(ident, "Already downloaded clip info")
+        return
+
+    res = get_top_clips(period, game, channel, limit=limit)
     log(ident, f"Amount Top Clips: {len(res)}")
 
     # make video always x minutes long
-    clips = filter_clips_duration(res, duration = 4)
+    clips = filter_clips_duration(res, duration = duration)
     log(ident, f"Filtered Clips: {len(clips)}")
 
     # last clip is most viewed
     clips = sorted(clips, key=lambda x: x["views"])
 
-    folder = locate_folder(ident)
-    # save clips to process if data got lost
-    with open(f"{folder}/clips.json", "w+") as f:
-        f.write(json.dumps(clips))
+    # save clips to file if process get stuck
+    category = channel if channel else game
+    data = dict(
+        clips = clips,
+        n = n,
+        period = period,
+        category = category,
+    )
+    with open(filename, "w+") as f:
+        f.write(json.dumps(data))
 
 
-def filter_clips_duration(clips, duration = 4):
+def filter_clips_duration(clips, duration = 5):
     """duration is time in minutes"""
     clips = sorted(clips, key=lambda x: x["views"], reverse=True)
     current_duration = 0
@@ -46,7 +58,9 @@ def cut_clips(ident):
     with open(f"{folder}/clips.json", "r") as f:
         raw = f.read()
 
-    clips = json.loads(raw)
+    data = json.loads(raw)
+    clips = data["clips"]
+
     log(ident, f"Downloading {len(clips)} Clips")
 
     files = []
@@ -61,31 +75,29 @@ def cut_clips(ident):
     out_file = f"{folder}/merged.mp4"
     concat_clips(files, out_file)
 
-    game = clips[0]['game']
-    return clips, out_file, game
+    return data
 
 
-def do_clips(games):
-    week = get_week()
+def do_clips(games, period, n = 0, limit = 30, duration = 5):
     identifiers = list()
     for game in games:
         pg = game.replace(" ", "").lower()
-        ident = f"{week}_{pg}"
+        ident = f"{period[0]}{n}_{pg}"
         identifiers.append(ident)
-        get_clips(ident, 'week', game, None)
+        get_clips(ident, period, game, None, n, limit, duration)
         # sleep to prevent ddos to twitch
         time.sleep(5)
 
     for ident in identifiers:
-        clips, merged, game = cut_clips(ident)
-        save_video(ident, merged, clips, game)
+        cut_clips(ident)
+        save_video(ident)
         upload_video(ident)
-        print(f"uploaded video: {ident}")
+        print(f"Finished Video: {ident}")
 
 
 def download_clip(clip, filename, force=False):
     if not force and os.path.isfile(filename):
-        print("Clip already downloaded.")
+        print("Clip already downloaded")
         return
 
     thumb_url = clip["thumbnails"]["tiny"]

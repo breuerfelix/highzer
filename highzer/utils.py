@@ -28,6 +28,10 @@ def get_week():
     return date.today().isocalendar()[1]
 
 
+def get_day():
+    return datetime.now().timetuple().tm_yday
+
+
 def _sec_to_time(secs):
     # pretty print seconds to hour:minute:seconds
     hours = secs // 3600

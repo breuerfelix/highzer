@@ -10,6 +10,7 @@ chunk_list.txt
 *.mp4
 *.mp3
 *.log
+*.json
 poetry.lock
 
 node_modules

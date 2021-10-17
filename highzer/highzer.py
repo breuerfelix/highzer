@@ -3,7 +3,7 @@ import click
 #import requests
 import schedule as sched
 import time
-from .utils import run, locate_folder
+from .utils import run, locate_folder, get_week, get_day
 #from .chat import analyze_chat
 #from .audio import analyze_audio, analyze_audio_test
 #from .fpeg import cut, merge
@@ -91,24 +91,21 @@ def convert(ident):
 )
 @click.option("-g", "--game", default=None)
 @click.option("-c", "--channel", default=None)
-def clip(ident, period, game, channel):
+@click.option("-u", "--upload", is_flag=True)
+def clip(ident, period, game, channel, upload):
     if game is None and channel is None:
         print("Please provide a channel or a game!")
         return
 
-    print("Clipping video...")
+    print(f"Clipping video {ident}")
+
     get_clips(ident, period, game, channel)
-    clips, merged, game = cut_clips(ident)
-    save_video(ident, merged, clips, game)
+    cut_clips(ident)
+    save_video(ident)
+    if upload:
+        upload_video(ident)
 
-
-@cli.command()
-@click.argument("ident")
-def ident(ident):
-    clips, merged, game = cut_clips(ident)
-    save_video(ident, merged, clips, game)
-    upload_video(ident)
-    print(f"uploaded video: {ident}")
+    print(f"Finished video {ident}")
 
 
 @cli.command()
@@ -126,8 +123,17 @@ def schedule():
         "Guild Wars 2",
     ]
 
-    upload_time = "12:00"
-    sched.every().saturday.at(upload_time).do(do_clips, games=games)
+    def weekly():
+        do_clips(games, "week", get_week(), 20)
+
+    def daily():
+        do_clips(games, "day", get_day(), 5)
+
+    # def monthly():
+        # do_clips(games, "month", get_month(), 50, 15)
+
+    sched.every().saturday.at("12:00").do(weekly)
+    sched.every().day.at("00:00").do(daily)
 
     while True:
         sched.run_pending()
@@ -135,7 +141,10 @@ def schedule():
 
 
 @cli.command()
-def manual():
+@click.option(
+    "-p", "--period", default="week", help="day / week / month / all", show_default=True
+)
+def manual(period):
     games = [
         "Minecraft",
         "World of Warcraft",
@@ -147,7 +156,7 @@ def manual():
         "Guild Wars 2",
     ]
 
-    do_clips(games)
+    do_clips(games, period, get_day(), 5)
 
 
 @cli.command()

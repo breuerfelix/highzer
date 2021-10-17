@@ -8,7 +8,7 @@ def concat_clips(files, out_file, force=False):
         return
 
     clips = list()
-    for i, file in enumerate(files):
+    for _, file in enumerate(files):
         clip = VideoFileClip(file).resize((1920, 1080)) \
             .crossfadeout(1).crossfadein(1)
 
