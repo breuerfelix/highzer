@@ -8,8 +8,8 @@ authors = ["Felix Breuer <f.breuer94@gmail.com>"]
 highzer = "highzer.highzer:cli"
 
 [tool.poetry.dependencies]
-opplast = {git = "https://github.com/breuerfelix/opplast", rev = "main"}
-#opplast = "1.0.8"
+#opplast = {git = "https://github.com/breuerfelix/opplast", rev = "main"}
+opplast = "1.0.11"
 
 python = "^3.8"
 requests = "^2.24.0"
@@ -21,13 +21,13 @@ schedule = "^0.6.0"
 moviepy = "^1.0.3"
 path = "^15.1.2"
 
-# pinned versions
-
 # nix module is already built
 cryptography = "3.4.*"
 
 # 4.x yields geckodriver error code 64
 selenium = "3.*"
+
+# youtube api
 google-api-python-client = "^2.26.1"
 google-auth = "^2.3.0"
 google-auth-oauthlib = "^0.4.6"
