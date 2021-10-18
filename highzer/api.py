@@ -4,7 +4,6 @@ import datetime
 import google.oauth2.credentials
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
-from .utils import locate_folder
 
 CLIENT_SECRETS_FILE = "client_secret.json"
 TOKEN_FILE = "client.json"
@@ -79,19 +78,3 @@ def update_video(youtube, id, title, description, tags):
 
     youtube.videos().update(part="snippet,status", body=body).execute()
     return True
-
-
-if __name__ == "__main__":
-    id = "omzO9N2GnMo"
-    ident = "41_minecraft"
-    folder = locate_folder(ident)
-
-    with open(f'{folder}/data.json', 'r') as f:
-        raw = f.read()
-
-    meta = json.loads(raw)
-
-    description = meta["description"]
-    print(description)
-    yt = get_api()
-    done = update_video(yt, id, meta["title"], description, meta["tags"])

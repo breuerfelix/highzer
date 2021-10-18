@@ -133,7 +133,7 @@ def schedule():
         # do_clips(games, "month", get_month(), 50, 15)
 
     sched.every().saturday.at("12:00").do(weekly)
-    sched.every().day.at("00:00").do(daily)
+    sched.every().day.at("23:00").do(daily)
 
     while True:
         sched.run_pending()
