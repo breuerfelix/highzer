@@ -5,40 +5,78 @@ import time
 from .utils import locate_folder, log
 from .twitch import get_top_clips
 from .movie import concat_clips
-from .yt import save_video, upload_video
+from .yt import get_yt_snippet, upload_video
 
 
-def get_clips(ident, period, game, channel, n = 0, limit = 30, duration = 5, force = False):
+def do_clips(games, period, n = 0, limit = 30, duration = 5):
+    identifiers = list()
+    for game in games:
+        pg = game.replace(" ", "").lower()
+        ident = f"{period[0]}{n}_{pg}"
+        done = fetch_clip_data(ident, period, game, None, limit, duration, n = n)
+
+        if done:
+            # only append identifier if we found enough clips
+            identifiers.append(ident)
+
+        # sleep to prevent ddos to twitch
+        time.sleep(5)
+    print("Finished fetching clips")
+
+    for ident in identifiers:
+        merge_clips(ident)
+    print("Finished merging clips")
+
+    for ident in identifiers:
+        upload_video(ident)
+    print("Finished uploading videos")
+
+
+def fetch_clip_data(
+    ident, period, game, channel,
+    limit = 30, duration = 5, force = False,
+    n = 0, **kwargs,
+):
     folder = locate_folder(ident)
-    filename = f"{folder}/clips.json"
+    filename = f"{folder}/meta.json"
 
     if not force and os.path.isfile(filename):
-        log(ident, "Already downloaded clip info")
-        return
+        log(ident, "Already saved meta information")
+        return True
 
     res = get_top_clips(period, game, channel, limit=limit)
-    log(ident, f"Amount Top Clips: {len(res)}")
+    log(ident, f"Amount top clips: {len(res)}")
+    if len(res) < 1:
+        return False
 
     # make video always x minutes long
     clips = filter_clips_duration(res, duration = duration)
-    log(ident, f"Filtered Clips: {len(clips)}")
+    log(ident, f"filtered clips: {len(clips)}")
 
     # last clip is most viewed
     clips = sorted(clips, key=lambda x: x["views"])
 
-    # save clips to file if process get stuck
     category = channel if channel else game
+
+    snippet = get_yt_snippet(clips, category, period, n)
     data = dict(
         clips = clips,
-        n = n,
         period = period,
         category = category,
+        n = n,
+        # TODO why does the following line throw and error?
+        #snippet = snippet,
+        **kwargs,
     )
+    data["snippet"] = snippet
+
     with open(filename, "w+") as f:
-        f.write(json.dumps(data))
+        json.dump(data, f)
+
+    return True
 
 
-def filter_clips_duration(clips, duration = 5):
+def filter_clips_duration(clips, duration):
     """duration is time in minutes"""
     clips = sorted(clips, key=lambda x: x["views"], reverse=True)
     current_duration = 0
@@ -52,10 +90,11 @@ def filter_clips_duration(clips, duration = 5):
 
     return filtered
 
-def cut_clips(ident):
-    folder = locate_folder(ident)
 
-    with open(f"{folder}/clips.json", "r") as f:
+def merge_clips(ident):
+    folder = locate_folder(ident)
+    filename = f"{folder}/meta.json"
+    with open(filename, "r") as f:
         raw = f.read()
 
     data = json.loads(raw)
@@ -74,25 +113,6 @@ def cut_clips(ident):
 
     out_file = f"{folder}/merged.mp4"
     concat_clips(files, out_file)
-
-    return data
-
-
-def do_clips(games, period, n = 0, limit = 30, duration = 5):
-    identifiers = list()
-    for game in games:
-        pg = game.replace(" ", "").lower()
-        ident = f"{period[0]}{n}_{pg}"
-        identifiers.append(ident)
-        get_clips(ident, period, game, None, n, limit, duration)
-        # sleep to prevent ddos to twitch
-        time.sleep(5)
-
-    for ident in identifiers:
-        cut_clips(ident)
-        save_video(ident)
-        upload_video(ident)
-        print(f"Finished Video: {ident}")
 
 
 def download_clip(clip, filename, force=False):

@@ -55,7 +55,7 @@ def authenticate_api():
 
 
 
-def update_video(youtube, id, title, description, tags):
+def update(youtube, id, title, description, tags):
     res = youtube.videos().list(id=id, part="snippet,status").execute()
 
     if not res["items"]:
