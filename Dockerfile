@@ -2,6 +2,10 @@ FROM python:3.8-slim-buster
 
 WORKDIR /usr/app
 
+# set timezone
+RUN echo "Europe/Berlin" > /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
+
 # dependencies for moviepy
 RUN apt-get update && \
   apt-get install -y --no-install-recommends --no-install-suggests \

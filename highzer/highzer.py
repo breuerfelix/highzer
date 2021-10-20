@@ -1,6 +1,5 @@
 import os
 import click
-#import requests
 import schedule as sched
 import time
 from .utils import locate_folder, get_week, get_day
