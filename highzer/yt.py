@@ -2,7 +2,7 @@ import json
 from datetime import date
 from .utils import pretty_short_time, log, locate_folder
 from .ytbrowser import upload
-from .ytapi import get_api, update
+from .ytapi import get_api, update, dump_token
 
 
 def get_yt_snippet(clips, category, period, n):
@@ -54,9 +54,10 @@ def upload_video(ident):
     meta = json.loads(raw)
     snippet = meta["snippet"]
 
-    yt = get_api()
+    yt, creds = get_api()
     done = update(yt, id, snippet["title"], snippet["description"], snippet["tags"])
     if not done:
         log(ident, "Error: Could not update video")
 
+    dump_token(creds)
     log(ident, f"Video meta data for {snippet['title']} changed")

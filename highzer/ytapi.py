@@ -29,14 +29,10 @@ def get_api():
         expiry=expiry,
     )
 
-    return build(API_SERVICE_NAME, API_VERSION, credentials=creds)
+    return build(API_SERVICE_NAME, API_VERSION, credentials=creds), creds
 
 
-
-def authenticate_api():
-    flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, SCOPES)
-    creds = flow.run_console()
-
+def dump_token(creds):
     creds_data = {
         "access_token": creds.token,
         "refresh_token": creds.refresh_token,
@@ -50,6 +46,13 @@ def authenticate_api():
 
     with open(TOKEN_FILE, "w+") as f:
         json.dump(creds_data, f)
+
+
+def authenticate_api():
+    flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, SCOPES)
+    creds = flow.run_console()
+
+    dump_token(creds)
 
     return build(API_SERVICE_NAME, API_VERSION, credentials=creds)
 
