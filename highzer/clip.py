@@ -44,7 +44,12 @@ def fetch_clip_data(
         log(ident, "Already saved meta information")
         return True
 
-    res = get_top_clips(period, game, channel, limit=limit)
+    try:
+        res = get_top_clips(period, game, channel, limit=limit)
+    except:
+        log(ident, "Error getting clips")
+        return False
+
     log(ident, f"Amount top clips: {len(res)}")
     if len(res) < 1:
         return False
