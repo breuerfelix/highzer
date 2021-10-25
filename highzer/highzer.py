@@ -103,7 +103,14 @@ def schedule():
     "-p", "--period", default="week", help="day / week / month / all", show_default=True
 )
 def manual(period):
-    do_clips(GAMES, period, get_day(), 5)
+    n = get_day()
+    amount = 5
+
+    if period == "week":
+        n = get_week()
+        amount = 30
+
+    do_clips(GAMES, period, n, amount)
 
 
 @cli.command()
