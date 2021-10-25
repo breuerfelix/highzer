@@ -102,14 +102,9 @@ def schedule():
 @click.option(
     "-p", "--period", default="week", help="day / week / month / all", show_default=True
 )
-def manual(period):
-    n = get_day()
-    amount = 5
-
-    if period == "week":
-        n = get_week()
-        amount = 30
-
+@click.option("-n")
+@click.option("-a", "--amount")
+def manual(period, n, amount):
     do_clips(GAMES, period, n, amount)
 
 
