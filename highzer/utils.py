@@ -59,7 +59,8 @@ def pprint(data):
 
 
 def log(ident, *args):
-    print(f'{ident} - ', *args)
+    timestamp = datetime.now().strftime("%d/%m-%H:%M:%S")
+    print(f'{timestamp} - {ident} - ', *args)
 
 
 def run(*args):

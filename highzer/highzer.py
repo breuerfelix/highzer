@@ -2,7 +2,7 @@ import os
 import click
 import schedule as sched
 import time
-from .utils import locate_folder, get_week, get_day
+from .utils import locate_folder, get_week, get_day, log
 from .clip import fetch_clip_data, merge_clips, do_clips
 from .yt import upload_video
 
@@ -110,7 +110,7 @@ def manual(period, n, amount):
 
 @cli.command()
 def test():
-    print("imports working")
+    log("test", "imports are working")
 
 
 if __name__ == "__main__":
