@@ -78,7 +78,7 @@ def clip(ident, period, game, channel, upload):
 
 @cli.command()
 def schedule():
-    print("starting schedule")
+    log("main", "starting schedule")
 
 
     def weekly():
@@ -99,13 +99,28 @@ def schedule():
 
 
 @cli.command()
+def daily():
+    log("main", "starting daily schedule")
+    do_clips(GAMES, "day", get_day(), 5)
+    log("main", "starting daily schedule")
+
+
+@cli.command()
+def weekly():
+    log("main", "starting daily schedule")
+    do_clips(GAMES, "week", get_week(), 20)
+    log("main", "starting daily schedule")
+
+
+@cli.command()
 @click.option(
     "-p", "--period", default="week", help="day / week / month / all", show_default=True
 )
-@click.option("-n")
-@click.option("-a", "--amount")
-def manual(period, n, amount):
-    do_clips(GAMES, period, n, amount)
+@click.option("-n", type=int)
+@click.option("-a", "--amount", type=int)
+@click.option("-d", "--duration", type=int)
+def manual(period, n, amount, duration):
+    do_clips(GAMES, period, n, amount, duration)
 
 
 @cli.command()
