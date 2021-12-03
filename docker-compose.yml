@@ -2,8 +2,10 @@ version: '3'
 
 services:
   highzer:
-    image: felixbreuer/highzer:latest
+    image: ghcr.io/breuerfelix/highzer:latest
     build: .
+    environment:
+      - UPLOAD_URL=http://localhost:80
+      - PASSPHRASE=uploadpy
     volumes:
       - ./data:/usr/app/data
-      - ./profile:/usr/app/profile

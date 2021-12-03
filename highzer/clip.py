@@ -5,7 +5,8 @@ import time
 from .utils import locate_folder, log
 from .twitch import get_top_clips
 from .movie import concat_clips
-from .yt import get_yt_snippet, upload_video
+from .yt import get_yt_snippet
+from .upload import upload_ident
 
 
 def do_clips(games, period, n = 0, limit = 30, duration = 5):
@@ -28,7 +29,27 @@ def do_clips(games, period, n = 0, limit = 30, duration = 5):
     print("Finished merging clips")
 
     for ident in identifiers:
-        upload_video(ident)
+        upload_ident(ident)
+    print("Finished uploading videos")
+
+
+def do_clip(game, period, n = 0, limit = 30, duration = 5):
+    pg = game.replace(" ", "").lower()
+    ident = f"{period[0]}{n}_{pg}"
+    done = fetch_clip_data(ident, period, game, None, limit, duration, n = n)
+
+    if not done:
+        print("Not able to fetch clips")
+        return
+
+    # sleep to prevent ddos to twitch
+    time.sleep(5)
+    print("Finished fetching clips")
+
+    merge_clips(ident)
+    print("Finished merging clips")
+
+    upload_ident(ident)
     print("Finished uploading videos")
 
 

@@ -3,9 +3,9 @@ import click
 import schedule as sched
 import time
 from .utils import locate_folder, get_week, get_day, log
-from .clip import fetch_clip_data, merge_clips, do_clips
-from .yt import upload_video
-
+from .clip import fetch_clip_data, merge_clips, do_clips, do_clip
+from .upload import upload_ident
+from .kubernetes import generate_manifests
 
 GAMES = [
     "New World",
@@ -71,7 +71,7 @@ def clip(ident, period, game, channel, upload):
     fetch_clip_data(ident, period, game, channel)
     merge_clips(ident)
     if upload:
-        upload_video(ident)
+        upload_ident(ident)
 
     print(f"Finished video {ident}")
 
@@ -99,17 +99,33 @@ def schedule():
 
 
 @cli.command()
-def daily():
-    log("main", "starting daily schedule")
-    do_clips(GAMES, "day", get_day(), 5)
-    log("main", "starting daily schedule")
+@click.argument("game")
+def daily(game):
+    print(game)
+    log(game, "starting daily schedule")
+    do_clip(game, "day", get_day(), 5)
+    log(game, "starting daily schedule")
 
 
 @cli.command()
-def weekly():
-    log("main", "starting daily schedule")
-    do_clips(GAMES, "week", get_week(), 20)
-    log("main", "starting daily schedule")
+@click.argument("game")
+def weekly(game):
+    log(game, "starting daily schedule")
+    do_clip(game, "week", get_week(), 20)
+    log(game, "starting daily schedule")
+
+
+@cli.command()
+@click.argument("ident")
+def upload(ident):
+    upload_ident(ident)
+
+
+@cli.command()
+@click.argument("upload_url")
+@click.argument("passphrase")
+def kubernetes(upload_url, passphrase):
+    print(generate_manifests(GAMES, upload_url, passphrase))
 
 
 @cli.command()

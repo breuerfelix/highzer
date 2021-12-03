@@ -10,7 +10,6 @@ in highzer.env.overrideAttrs (oldAttrs: {
   buildInputs = with pkgs; [
     python3
     poetry
-    geckodriver
     ffmpeg
     imagemagick
   ];
