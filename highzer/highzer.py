@@ -20,7 +20,6 @@ GAMES = [
     "Guild Wars 2",
 ]
 
-
 @click.group()
 def cli():
     pass

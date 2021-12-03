@@ -15,7 +15,7 @@ def generate_manifests(games, upload_url, passphrase):
 
         data.append(gen_highzer(
             f"{g}-weekly",
-            "0 22 * * 6",
+            "0 12 * * 6",
             ["highzer", "weekly", game],
             upload_url,
             passphrase,
@@ -29,7 +29,7 @@ def gen_highzer(name, schedule, command, upload_url, passphrase):
         "default",
         name,
         schedule,
-        "gcr.io/breuerfelix/highzer:latest",
+        "ghcr.io/breuerfelix/highzer:latest",
         command,
         [
             {"name": "UPLOAD_URL", "value": upload_url},

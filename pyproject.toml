@@ -2,7 +2,7 @@
 name = "highzer"
 version = "0.1.0"
 description = "Twitch Stream Analyzer"
-authors = ["Felix Breuer <f.breuer94@gmail.com>"]
+authors = ["Felix Breuer <fbreuer@pm.me>"]
 
 [tool.poetry.scripts]
 highzer = "highzer.highzer:cli"
