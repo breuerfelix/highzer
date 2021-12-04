@@ -4,11 +4,10 @@ Twitch Stream Analyzer and Video Cutter
 
 ## Dependencies
 
-- ffmpeg
 - poetry
-- selenium
-- firefox
-- geckodriver
+- python
+- ffmpeg
+- imagemagick
 
 __Recommended:__ Run your scripts in a container with the `Dockerfile` provided in this Repo.
 
@@ -17,7 +16,10 @@ __Recommended:__ Run your scripts in a container with the `Dockerfile` provided 
 ```bash
 poetry install
 poetry shell
-python highzer/highzer.py --help
+highzer --help
+# or
+nix-shell
+highzer --help
 ```
 
 ## Nice to Know
