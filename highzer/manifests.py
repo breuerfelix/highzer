@@ -5,6 +5,7 @@ from .config import UPLOAD_URL, PASSPHRASE
 from .utils import locate_folder
 
 IMAGE = "ghcr.io/breuerfelix/highzer:latest"
+NAMESPACE = "highzer"
 
 def generate_manifests(games, upload_url, passphrase):
     data = list()
@@ -30,12 +31,12 @@ def generate_manifests(games, upload_url, passphrase):
             )
         )
 
+    data.append(gen_cleanup_job(NAMESPACE))
     return yaml.dump_all(data)
 
 
 def apply_merge_job(game, prefix):
     name = f"{prefix}-{slugify(game)}"
-    ns = "highzer"
     res = {
         "requests": {
             "cpu": "2000m",
@@ -61,7 +62,7 @@ def apply_merge_job(game, prefix):
 
 
     job = gen_job(
-        ns,
+        NAMESPACE,
         name,
         IMAGE,
         ["highzer", "merge", game],
@@ -79,19 +80,19 @@ def apply_merge_job(game, prefix):
     with open(filename, "r") as f:
         raw = f.read()
 
-    cm = gen_configmap(ns, name, {"meta.json": raw})
+    cm = gen_configmap(NAMESPACE, name, {"meta.json": raw})
 
     data = [job, cm]
 
     config.load_config()
-    k8s_client = client.ApiClient()
+    #k8s_client = client.ApiClient()
+    k8s_client = client.CoreV1Api()
     utils.create_from_yaml(k8s_client, yaml_objects=data)
 
 
 def gen_prepare(name, schedule, command, upload_url, passphrase):
-    ns = "highzer"
     cj = gen_cronjob(
-        ns,
+        NAMESPACE,
         name,
         schedule,
         IMAGE,
@@ -173,3 +174,14 @@ def gen_configmap(namespace, name, data):
         },
         "data": data,
     }
+
+
+def gen_cleanup_job(namespace):
+    return gen_job(
+        namespace,
+        "cleanup-jobs",
+        "*/30 * * * *",
+        "wernight/kubectl",
+        ["sh", "-c", "kubectl get jobs | awk '$4 ~ /[2-9]d$/ || $3 ~ 1' | awk '{print $1}' | xargs kubectl delete job"],
+    )
+
