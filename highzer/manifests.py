@@ -31,7 +31,9 @@ def generate_manifests(games, upload_url, passphrase):
             )
         )
 
-    data.append(gen_cleanup_job(NAMESPACE))
+    #data.append(gen_cleanup_job(NAMESPACE))
+    data.append(gen_role(NAMESPACE, "highzer"))
+    data.append(gen_role_binding(NAMESPACE, "highzer"))
     return yaml.dump_all(data)
 
 
@@ -85,8 +87,7 @@ def apply_merge_job(game, prefix):
     data = [job, cm]
 
     config.load_config()
-    #k8s_client = client.ApiClient()
-    k8s_client = client.CoreV1Api()
+    k8s_client = client.ApiClient()
     utils.create_from_yaml(k8s_client, yaml_objects=data)
 
 
@@ -184,4 +185,41 @@ def gen_cleanup_job(namespace):
         "wernight/kubectl",
         ["sh", "-c", "kubectl get jobs | awk '$4 ~ /[2-9]d$/ || $3 ~ 1' | awk '{print $1}' | xargs kubectl delete job"],
     )
+
+
+def gen_role(namespace, name):
+    return {
+        "apiVersion": "rbac.authorization.k8s.io/v1",
+        "kind": "Role",
+        "metadata": {
+            "name": name,
+            "namespace": namespace,
+        },
+        "rules": [{
+            "apiGroups": ["", "batch"],
+            "resources": ["jobs", "configmaps"],
+            "verbs": ["create", "update", "patch", "delete"],
+        }],
+    }
+
+
+def gen_role_binding(namespace, name):
+    return {
+        "apiVersion": "rbac.authorization.k8s.io/v1",
+        "kind": "RoleBinding",
+        "metadata": {
+            "name": name,
+            "namespace": namespace,
+        },
+        "roleRef": {
+            "apiGroup": "rbac.authorization.k8s.io",
+            "kind": "Role",
+            "name": name,
+        },
+        "subjects": [{
+            "kind": "ServiceAccount",
+            "name": "default",
+            "namespace": "highzer"
+        }],
+    }
 
