@@ -5,7 +5,7 @@ import time
 from .utils import locate_folder, get_week, get_day, log
 from .clip import fetch_clip_data, merge_clips, do_clips, do_clip
 from .upload import upload_ident
-from .kubernetes import generate_manifests
+from .manifests import generate_manifests, apply_merge_job
 
 GAMES = [
     "New World",
@@ -99,25 +99,34 @@ def schedule():
 
 @cli.command()
 @click.argument("game")
-def daily(game):
-    print(game)
-    log(game, "starting daily schedule")
-    do_clip(game, "day", get_day(), 5)
-    log(game, "starting daily schedule")
+def prepare_daily(game):
+    log(game, "prepare daily")
+    done = fetch_clip_data("static", "day", game, None, 5, 5, True, n = get_day())
+    if not done:
+        log(game, "unable to fetch clips")
+
+    apply_merge_job(game, "daily")
 
 
 @cli.command()
 @click.argument("game")
-def weekly(game):
-    log(game, "starting daily schedule")
-    do_clip(game, "week", get_week(), 20)
-    log(game, "starting daily schedule")
+def prepare_weekly(game):
+    log(game, "prepare weekly")
+    done = fetch_clip_data("static", "week", game, None, 20, 5, True, n = get_week())
+    if not done:
+        log(game, "unable to fetch clips")
+
+    apply_merge_job(game, "weekly")
 
 
 @cli.command()
-@click.argument("ident")
-def upload(ident):
+@click.argument("game")
+def merge(game):
+    log(game, "merge daily")
+    ident = "static"
+    merge_clips(ident)
     upload_ident(ident)
+    log(game, "finished daily")
 
 
 @cli.command()

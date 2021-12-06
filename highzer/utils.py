@@ -2,6 +2,7 @@ import json
 import subprocess
 import timeit
 import numpy as np
+
 import os
 import time
 from datetime import date, datetime
@@ -60,7 +61,7 @@ def pprint(data):
 
 def log(ident, *args):
     timestamp = datetime.now().strftime("%d/%m-%H:%M:%S")
-    print(f'{timestamp} - {ident} - ', *args)
+    print(f"{timestamp} - {ident} - ", *args)
 
 
 def run(*args):
@@ -101,6 +102,7 @@ def get_base_folder():
         os.makedirs(folder)
 
     return folder
+
 
 def locate_folder(ident):
     folder = f"{get_base_folder()}/{ident}"

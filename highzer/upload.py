@@ -1,9 +1,8 @@
 import os
 import requests
 from .utils import locate_folder
+from .config import UPLOAD_URL, PASSPHRASE
 
-UPLOAD_URL = os.getenv("UPLOAD_URL", "http://localhost:80")
-PASSPHRASE = os.getenv("PASSPHRASE", "uploadpy")
 
 def upload_file(ident, file):
     folder = locate_folder(ident)

@@ -1,6 +1,7 @@
 from datetime import date
 from .utils import pretty_short_time
 
+
 def get_yt_snippet(clips, category, period, n):
     description = ""
 
@@ -19,10 +20,10 @@ def get_yt_snippet(clips, category, period, n):
     year = date.today().year
 
     tags = [tag.lower() for tag in tags]
-    tags.append(category.replace(' ', '').lower())
-    tags.append('twitch')
-    tags.append('highlight')
-    tags.append(f'{period}{n}')
+    tags.append(category.replace(" ", "").lower())
+    tags.append("twitch")
+    tags.append("highlight")
+    tags.append(f"{period}{n}")
 
     # those chars throw errors with the youtube API
     invalid_chars = "<>"
@@ -30,7 +31,7 @@ def get_yt_snippet(clips, category, period, n):
         description = description.replace(char, "")
 
     return dict(
-        title =  f"{period.capitalize()} {n} - {category} - Top {len(clips)} Twitch Highlights {year}",
-        description = description,
-        tags = tags,
+        title=f"{period.capitalize()} {n} - {category} - Top {len(clips)} Twitch Highlights {year}",
+        description=description,
+        tags=tags,
     )

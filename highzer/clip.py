@@ -42,8 +42,6 @@ def do_clip(game, period, n = 0, limit = 30, duration = 5):
         print("Not able to fetch clips")
         return
 
-    # sleep to prevent ddos to twitch
-    time.sleep(5)
     print("Finished fetching clips")
 
     merge_clips(ident)

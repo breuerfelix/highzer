@@ -23,6 +23,7 @@ path = "^15.1.2"
 cryptography = "3.4.*"
 PyYAML = "^6.0"
 python-slugify = "^5.0.2"
+kubernetes = "^20.13.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.2"
