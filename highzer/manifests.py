@@ -1,7 +1,8 @@
 import yaml
 from slugify import slugify
-from .config import UPLOAD_URL, PASSPHRASE
 from kubernetes import client, config, utils
+from .config import UPLOAD_URL, PASSPHRASE
+from .utils import locate_folder
 
 IMAGE = "ghcr.io/breuerfelix/highzer:latest"
 
@@ -33,6 +34,8 @@ def generate_manifests(games, upload_url, passphrase):
 
 
 def apply_merge_job(game, prefix):
+    name = f"{prefix}-{slugify(game)}"
+    ns = "highzer"
     res = {
         "requests": {
             "cpu": "2000m",
@@ -40,9 +43,26 @@ def apply_merge_job(game, prefix):
         },
     }
 
+    volumeMounts = [{
+        "name": "meta-json",
+        "mountPath": "/usr/app/data/static"
+    }]
+
+    volumes = [{
+        "name": "meta-json",
+        "configMap": {
+            "name": name,
+            "items": [{
+                "key": "meta.json",
+                "path": "meta.json",
+            }],
+        },
+    }]
+
+
     job = gen_job(
-        "highzer",
-        f"{prefix}-{slugify(game)}",
+        ns,
+        name,
         IMAGE,
         ["highzer", "merge", game],
         [
@@ -50,11 +70,22 @@ def apply_merge_job(game, prefix):
             {"name": "PASSPHRASE", "value": PASSPHRASE},
         ],
         res,
+        volumeMounts,
+        volumes,
     )
+
+    folder = locate_folder("static")
+    filename = f"{folder}/meta.json"
+    with open(filename, "r") as f:
+        raw = f.read()
+
+    cm = gen_configmap(ns, name, {"meta.json": raw})
+
+    data = [job, cm]
 
     config.load_config()
     k8s_client = client.ApiClient()
-    utils.create_from_dict(k8s_client, job)
+    utils.create_from_yaml(k8s_client, yaml_objects=data)
 
 
 def gen_prepare(name, schedule, command, upload_url, passphrase):
@@ -71,11 +102,20 @@ def gen_prepare(name, schedule, command, upload_url, passphrase):
         ],
     )
 
-    cm = gen_configmap(ns, name, {"meta.json": ""})
-    return [cj, cm]
+    return [cj]
 
 
-def gen_job(namespace, name, image, command, env = [], resources = {}, backoffLimit = 5):
+def gen_job(
+    namespace,
+    name,
+    image,
+    command,
+    env = [],
+    resources = {},
+    volumeMounts = [],
+    volumes = [],
+    backoffLimit = 5,
+):
     return {
         "apiVersion": "batch/v1",
         "kind": "Job",
@@ -95,22 +135,10 @@ def gen_job(namespace, name, image, command, env = [], resources = {}, backoffLi
                             "command": command,
                             "env": env,
                             "resources": resources,
-                            "volumeMounts": [{
-                                "name": "meta-json",
-                                "mountPath": "/usr/app/data/static"
-                            }],
+                            "volumeMounts": volumeMounts,
                         },
                     ],
-                    "volumes": [{
-                        "name": "meta-json",
-                        "configMap": {
-                            "name": name,
-                            "items": [{
-                                "key": "meta.json",
-                                "path": "meta.json",
-                            }],
-                        },
-                    }],
+                    "volumes": volumes,
                 },
             },
             "backoffLimit": backoffLimit,
