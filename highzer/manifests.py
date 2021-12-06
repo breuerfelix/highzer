@@ -31,13 +31,13 @@ def generate_manifests(games, upload_url, passphrase):
             )
         )
 
-    #data.append(gen_cleanup_job(NAMESPACE))
+    data.append(gen_cleanup_job(NAMESPACE))
     data.append(gen_role(NAMESPACE, "highzer"))
     data.append(gen_role_binding(NAMESPACE, "highzer"))
     return yaml.dump_all(data)
 
 
-def apply_merge_job(game, prefix):
+def apply_merge_job(game, prefix, n):
     name = f"{prefix}-{slugify(game)}"
     res = {
         "requests": {
@@ -65,7 +65,7 @@ def apply_merge_job(game, prefix):
 
     job = gen_job(
         NAMESPACE,
-        name,
+        f"{name}-{n}",
         IMAGE,
         ["highzer", "merge", game],
         [
@@ -82,13 +82,18 @@ def apply_merge_job(game, prefix):
     with open(filename, "r") as f:
         raw = f.read()
 
-    cm = gen_configmap(NAMESPACE, name, {"meta.json": raw})
-
-    data = [job, cm]
+    body = {
+      "data": {
+        "meta.json": raw,
+      },
+    }
 
     config.load_config()
+    cm_client = client.CoreV1Api()
+    cm_client.patch_namespaced_config_map(NAMESPACE, name, body)
+
     k8s_client = client.ApiClient()
-    utils.create_from_yaml(k8s_client, yaml_objects=data)
+    utils.create_from_dict(k8s_client, job)
 
 
 def gen_prepare(name, schedule, command, upload_url, passphrase):
@@ -104,7 +109,9 @@ def gen_prepare(name, schedule, command, upload_url, passphrase):
         ],
     )
 
-    return [cj]
+    cm = gen_configmap(NAMESPACE, name, {"meta.json": ""})
+
+    return [cj, cm]
 
 
 def gen_job(
@@ -178,7 +185,7 @@ def gen_configmap(namespace, name, data):
 
 
 def gen_cleanup_job(namespace):
-    return gen_job(
+    return gen_cronjob(
         namespace,
         "cleanup-jobs",
         "*/30 * * * *",
