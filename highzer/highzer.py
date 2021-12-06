@@ -68,9 +68,9 @@ def clip(ident, period, game, channel, upload):
     print(f"Clipping video {ident}")
 
     fetch_clip_data(ident, period, game, channel)
-    merge_clips(ident)
+    merge_clips(ident, ident)
     if upload:
-        upload_ident(ident)
+        upload_ident(ident, ident)
 
     print(f"Finished video {ident}")
 
@@ -126,8 +126,9 @@ def prepare_weekly(game):
 def merge(game):
     log(game, "merge daily")
     ident = "static"
-    merge_clips(ident)
-    upload_ident(ident)
+    meta = "config"
+    merge_clips(ident, meta)
+    upload_ident(ident, meta)
     log(game, "finished daily")
 
 

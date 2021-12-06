@@ -25,11 +25,11 @@ def do_clips(games, period, n = 0, limit = 30, duration = 5):
     print("Finished fetching clips")
 
     for ident in identifiers:
-        merge_clips(ident)
+        merge_clips(ident, ident)
     print("Finished merging clips")
 
     for ident in identifiers:
-        upload_ident(ident)
+        upload_ident(ident, ident)
     print("Finished uploading videos")
 
 
@@ -44,10 +44,10 @@ def do_clip(game, period, n = 0, limit = 30, duration = 5):
 
     print("Finished fetching clips")
 
-    merge_clips(ident)
+    merge_clips(ident, ident)
     print("Finished merging clips")
 
-    upload_ident(ident)
+    upload_ident(ident, ident)
     print("Finished uploading videos")
 
 
@@ -115,9 +115,9 @@ def filter_clips_duration(clips, duration):
     return filtered
 
 
-def merge_clips(ident):
+def merge_clips(ident, meta):
     folder = locate_folder(ident)
-    filename = f"{folder}/meta.json"
+    filename = f"{locate_folder(meta)}/meta.json"
     with open(filename, "r") as f:
         raw = f.read()
 

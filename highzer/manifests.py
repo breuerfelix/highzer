@@ -48,18 +48,13 @@ def apply_merge_job(game, prefix, n):
 
     volumeMounts = [{
         "name": "meta-json",
-        "mountPath": "/usr/app/data/static",
-        "readOnly": False,
+        "mountPath": "/usr/app/data/config",
     }]
 
     volumes = [{
         "name": "meta-json",
         "configMap": {
             "name": name,
-            "items": [{
-                "key": "meta.json",
-                "path": "meta.json",
-            }],
         },
     }]
 
