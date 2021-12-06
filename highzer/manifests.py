@@ -90,7 +90,7 @@ def apply_merge_job(game, prefix, n):
 
     config.load_config()
     cm_client = client.CoreV1Api()
-    cm_client.patch_namespaced_config_map(NAMESPACE, name, body)
+    cm_client.patch_namespaced_config_map(name, NAMESPACE, body)
 
     k8s_client = client.ApiClient()
     utils.create_from_dict(k8s_client, job)
@@ -205,7 +205,7 @@ def gen_role(namespace, name):
         "rules": [{
             "apiGroups": ["", "batch"],
             "resources": ["jobs", "configmaps"],
-            "verbs": ["create", "update", "patch", "delete"],
+            "verbs": ["list", "create", "update", "patch", "delete"],
         }],
     }
 
