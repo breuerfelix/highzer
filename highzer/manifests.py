@@ -43,7 +43,9 @@ def apply_merge_job(game, prefix, n):
 
     owner_ref = []
 
+    config.load_config()
     b_client = client.BatchV1Api()
+
     jobs = b_client.list_namespaced_job(NAMESPACE)
     for job in jobs.items:
         if not current_name in job.metadata.name:
@@ -103,7 +105,6 @@ def apply_merge_job(game, prefix, n):
 
     data = [cm, job]
 
-    config.load_config()
     k8s_client = client.ApiClient()
     utils.create_from_yaml(k8s_client, yaml_objects=data)
 
