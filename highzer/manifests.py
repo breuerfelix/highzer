@@ -143,7 +143,7 @@ def gen_job(
         "metadata": {
             "name": name,
             "namespace": namespace,
-            "owner_references": owner_references,
+            "ownerReferences": owner_references,
         },
         "spec": {
             "template": {
@@ -192,7 +192,7 @@ def gen_configmap(namespace, name, data, owner_references = []):
         "metadata": {
             "name": name,
             "namespace": namespace,
-            "owner_references": owner_references,
+            "ownerReferences": owner_references,
         },
         "data": data,
     }
