@@ -105,6 +105,7 @@ def prepare_daily(game):
     done = fetch_clip_data("static", "day", game, None, 5, 5, True, n = day)
     if not done:
         log(game, "unable to fetch clips")
+        return
 
     apply_merge_job(game, "daily", day)
 
@@ -117,6 +118,7 @@ def prepare_weekly(game):
     done = fetch_clip_data("static", "week", game, None, 20, 5, True, n = week)
     if not done:
         log(game, "unable to fetch clips")
+        return
 
     apply_merge_job(game, "weekly", week)
 

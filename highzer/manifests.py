@@ -31,14 +31,34 @@ def generate_manifests(games, upload_url, passphrase):
             )
         )
 
-    data.append(gen_cleanup_job(NAMESPACE))
-    data.append(gen_role(NAMESPACE, "highzer"))
-    data.append(gen_role_binding(NAMESPACE, "highzer"))
+    data.append(gen_role(NAMESPACE, NAMESPACE))
+    data.append(gen_role_binding(NAMESPACE, NAMESPACE))
+
     return yaml.dump_all(data)
 
 
 def apply_merge_job(game, prefix, n):
-    name = f"{prefix}-{slugify(game)}"
+    current_name = f"{prefix}-{slugify(game)}"
+    name = f"{current_name}-{n}"
+
+    owner_ref = []
+
+    b_client = client.BatchV1Api()
+    jobs = b_client.list_namespaced_job(NAMESPACE)
+    for job in jobs.items:
+        if not current_name in job.metadata.name:
+            continue
+
+        if job.status.active == None:
+            continue
+
+        owner_ref.append({
+            "apiVersion": "batch/v1",
+            "kind": "Job",
+            "name": job.metadata.name,
+            "uid":  job.metadata.uid,
+        })
+
     res = {
         "requests": {
             "cpu": "2000m",
@@ -61,7 +81,7 @@ def apply_merge_job(game, prefix, n):
 
     job = gen_job(
         NAMESPACE,
-        f"{name}-{n}",
+        name,
         IMAGE,
         ["highzer", "merge", game],
         [
@@ -71,6 +91,7 @@ def apply_merge_job(game, prefix, n):
         res,
         volumeMounts,
         volumes,
+        owner_ref,
     )
 
     folder = locate_folder("static")
@@ -78,18 +99,13 @@ def apply_merge_job(game, prefix, n):
     with open(filename, "r") as f:
         raw = f.read()
 
-    body = {
-      "data": {
-        "meta.json": raw,
-      },
-    }
+    cm = gen_configmap(NAMESPACE, name, {"meta.json": raw}, owner_ref)
+
+    data = [cm, job]
 
     config.load_config()
-    cm_client = client.CoreV1Api()
-    cm_client.patch_namespaced_config_map(name, NAMESPACE, body)
-
     k8s_client = client.ApiClient()
-    utils.create_from_dict(k8s_client, job)
+    utils.create_from_yaml(k8s_client, yaml_objects=data)
 
 
 def gen_prepare(name, schedule, command, upload_url, passphrase):
@@ -105,9 +121,7 @@ def gen_prepare(name, schedule, command, upload_url, passphrase):
         ],
     )
 
-    cm = gen_configmap(NAMESPACE, name, {"meta.json": ""})
-
-    return [cj, cm]
+    return [cj]
 
 
 def gen_job(
@@ -119,6 +133,7 @@ def gen_job(
     resources = {},
     volumeMounts = [],
     volumes = [],
+    owner_references = [],
     backoffLimit = 5,
 ):
     return {
@@ -127,6 +142,7 @@ def gen_job(
         "metadata": {
             "name": name,
             "namespace": namespace,
+            "owner_references": owner_references,
         },
         "spec": {
             "template": {
@@ -168,26 +184,17 @@ def gen_cronjob(namespace, name, schedule, image, command, env = [], resources =
     }
 
 
-def gen_configmap(namespace, name, data):
+def gen_configmap(namespace, name, data, owner_references = []):
     return {
         "apiVersion": "v1",
         "kind": "ConfigMap",
         "metadata": {
             "name": name,
             "namespace": namespace,
+            "owner_references": owner_references,
         },
         "data": data,
     }
-
-
-def gen_cleanup_job(namespace):
-    return gen_cronjob(
-        namespace,
-        "cleanup-jobs",
-        "*/30 * * * *",
-        "wernight/kubectl",
-        ["sh", "-c", "kubectl get jobs | awk '$4 ~ /[2-9]d$/ || $3 ~ 1' | awk '{print $1}' | xargs kubectl delete job"],
-    )
 
 
 def gen_role(namespace, name):
@@ -201,7 +208,7 @@ def gen_role(namespace, name):
         "rules": [{
             "apiGroups": ["", "batch"],
             "resources": ["jobs", "configmaps"],
-            "verbs": ["list", "create", "update", "patch", "delete"],
+            "verbs": ["*"],
         }],
     }
 
