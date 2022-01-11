@@ -2,7 +2,7 @@ import os
 import requests
 import json
 import time
-from .utils import locate_folder, log
+from .utils import locate_folder, log, get_ident
 from .twitch import get_top_clips
 from .movie import concat_clips
 from .yt import get_yt_snippet
@@ -12,8 +12,7 @@ from .upload import upload_ident
 def do_clips(games, period, n = 0, limit = 30, duration = 5):
     identifiers = list()
     for game in games:
-        pg = game.replace(" ", "").lower()
-        ident = f"{period[0]}{n}_{pg}"
+        ident = get_ident(game, period, n)
         done = fetch_clip_data(ident, period, game, None, limit, duration, n = n)
 
         if done:
@@ -34,8 +33,7 @@ def do_clips(games, period, n = 0, limit = 30, duration = 5):
 
 
 def do_clip(game, period, n = 0, limit = 30, duration = 5):
-    pg = game.replace(" ", "").lower()
-    ident = f"{period[0]}{n}_{pg}"
+    ident = get_ident(game, period, n)
     done = fetch_clip_data(ident, period, game, None, limit, duration, n = n)
 
     if not done:
@@ -93,6 +91,7 @@ def fetch_clip_data(
         **kwargs,
     )
     data["snippet"] = snippet
+    data["ident"] = get_ident(game, period, n)
 
     with open(filename, "w+") as f:
         json.dump(data, f)
@@ -137,6 +136,7 @@ def merge_clips(ident, meta):
 
     out_file = f"{folder}/merged.mp4"
     concat_clips(files, out_file)
+    return data["ident"]
 
 
 def download_clip(clip, filename, force=False):

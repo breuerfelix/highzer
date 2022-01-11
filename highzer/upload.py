@@ -20,12 +20,14 @@ def upload_youtube(ident):
         "passphrase": PASSPHRASE,
     }
 
-    res = requests.post(f"{UPLOAD_URL}/youtube", json=data)
-    return res
+    return requests.post(f"{UPLOAD_URL}/youtube", json=data)
 
 
-def upload_ident(ident, meta):
-    upload_file(ident, "merged.mp4", f"{ident}.mp4")
-    upload_file(meta, "meta.json", f"{ident}.json")
-    upload_youtube(ident)
+def upload_ident(ident, meta, dest = None):
+    if not dest:
+        dest = ident
+
+    upload_file(ident, "merged.mp4", f"{dest}.mp4")
+    upload_file(meta, "meta.json", f"{dest}.json")
+    upload_youtube(dest)
 

@@ -25,6 +25,11 @@ def retry(func, amount=3, interval=30, *args, **kwargs):
             time.sleep(interval)
 
 
+def get_ident(game, period, n):
+    pg = game.replace(" ", "").lower()
+    return f"{period[0]}{n}_{pg}"
+
+
 def get_week():
     return date.today().isocalendar()[1]
 

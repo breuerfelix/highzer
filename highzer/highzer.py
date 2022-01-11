@@ -2,7 +2,7 @@ import os
 import click
 import schedule as sched
 import time
-from .utils import locate_folder, get_week, get_day, log
+from .utils import locate_folder, get_week, get_day, log, get_ident
 from .clip import fetch_clip_data, merge_clips, do_clips
 from .upload import upload_ident
 from .manifests import generate_manifests, apply_merge_job
@@ -97,41 +97,37 @@ def schedule():
         time.sleep(10)
 
 
-@cli.command()
-@click.argument("game")
-def prepare_daily(game):
-    log(game, "prepare daily")
-    day = get_day()
-    done = fetch_clip_data("static", "day", game, None, 5, 5, True, n = day)
+def prepare(job, game, limit, n):
+    log(game, f"prepare {job}")
+    done = fetch_clip_data("static", job, game, None, limit, 5, True, n = n)
     if not done:
         log(game, "unable to fetch clips")
         return
 
-    apply_merge_job(game, "daily", day)
+    apply_merge_job(game, job, n)
+
+
+@cli.command()
+@click.argument("game")
+def prepare_daily(game):
+    prepare("day", game, 5, get_day())
 
 
 @cli.command()
 @click.argument("game")
 def prepare_weekly(game):
-    log(game, "prepare weekly")
-    week = get_week()
-    done = fetch_clip_data("static", "week", game, None, 20, 5, True, n = week)
-    if not done:
-        log(game, "unable to fetch clips")
-        return
-
-    apply_merge_job(game, "weekly", week)
+    prepare("week", game, 20, get_week())
 
 
 @cli.command()
 @click.argument("game")
 def merge(game):
-    log(game, "merge daily")
+    log(game, "merging started")
     ident = "static"
     meta = "config"
-    merge_clips(ident, meta)
-    upload_ident(ident, meta)
-    log(game, "finished daily")
+    new_ident = merge_clips(ident, meta)
+    upload_ident(ident, meta, new_ident)
+    log(game, "finished merging")
 
 
 @cli.command()
