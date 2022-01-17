@@ -75,8 +75,8 @@ def fetch_clip_data(
     clips = filter_clips_duration(res, duration = duration)
     log(ident, f"filtered clips: {len(clips)}")
 
-    # last clip is most viewed
-    clips = sorted(clips, key=lambda x: x["views"])
+    # first clip is most viewed
+    clips = sorted(clips, reverse=True, key=lambda x: x["views"])
 
     category = channel if channel else game
 
