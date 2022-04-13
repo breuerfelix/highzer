@@ -2,7 +2,7 @@ import os
 import click
 import schedule as sched
 import time
-from .utils import locate_folder, get_week, get_day, log, get_ident
+from .utils import locate_folder, get_week, get_day, log
 from .clip import fetch_clip_data, merge_clips, do_clips
 from .upload import upload_ident
 from .manifests import generate_manifests, apply_merge_job
@@ -18,6 +18,8 @@ GAMES = [
     "Fortnite",
     "League of Legends",
     "Guild Wars 2",
+    "Elden Ring",
+    "Lost Ark",
 ]
 
 @click.group()

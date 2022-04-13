@@ -14,7 +14,13 @@ def get_yt_snippet(clips, category, period, n):
         title = clip["title"].split("\n")[0]
         description += f"{pt} - {title}\n"
 
-        tags.append(clip["broadcaster"]["display_name"])
+        bc = clip["broadcaster"]
+        description += f"{bc['display_name']} - {bc['channel_url']}\n"
+
+        # newline between clips
+        description += "\n"
+
+        tags.append(bc["display_name"])
         duration += clip["duration"]
 
     year = date.today().year
