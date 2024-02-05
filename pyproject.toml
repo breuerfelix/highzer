@@ -17,7 +17,7 @@ schedule = "^0.6.0"
 #scipy = "^1.7.0"
 
 moviepy = "^1.0.3"
-path = "^15.1.2"
+path = "^16.0.0"
 
 # nix module is already built
 cryptography = "3.4.*"
