@@ -13,6 +13,14 @@ __Recommended:__ Run your scripts in a container with the `Dockerfile` provided 
 
 ## Setup and Run
 
+### Docker
+
+```bash
+docker run --rm -v /home/<user>/<some-folder-on-your-system>:/usr/app/data ghcr.io/breuerfelix/highzer:latest highzer --help
+```
+
+### Native
+
 ```bash
 poetry install
 poetry shell
