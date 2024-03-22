@@ -20,7 +20,7 @@ moviepy = "^1.0.3"
 path = "^16.0.0"
 
 # nix module is already built
-cryptography = "3.4.*"
+cryptography = "42.0.*"
 PyYAML = "^6.0"
 python-slugify = "^8.0.0"
 kubernetes = "^29.0.0"
