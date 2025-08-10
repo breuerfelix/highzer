@@ -16,7 +16,7 @@ python-ffmpeg = "^2.0.0"
 schedule = "^1.0.0"
 #scipy = "^1.7.0"
 
-moviepy = "^1.0.3"
+moviepy = "^2.0.0"
 path = "^17.0.0"
 
 # nix module is already built
